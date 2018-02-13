@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="idols">
+
+	<select id="selectList" resultType="vo.Idol">
+		SELECT no, name, height, weight, birth_date birthDate, group_no groupNo
+		FROM idols
+	</select>
+	
+	<delete id="delete" parameterType="int">
+		DELETE idols
+		WHERE no = #{no}
+	</delete>
+
+<insert id="insert" parameterType="vo.Idol">
+		INSERT INTO idols(no, name, height, weight, birth_date, group_no)
+		VALUES(idols_seq.nextval,#{name},#{height},#{weight},#{birthDate},#{groupNo})
+	</insert>
+
+</mapper>
