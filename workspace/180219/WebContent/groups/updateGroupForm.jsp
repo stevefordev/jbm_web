@@ -11,12 +11,7 @@
 
 	Group group = GroupsDAO.selectOne(no);
 	//2. 한 개의 그룹 정보를 얻어옴
-	Calendar cal = Calendar.getInstance();
-	cal.setTime(group.getDebutDate());
-	
-	int year = cal.get(Calendar.YEAR);
-	int month = cal.get(Calendar.MONTH) + 1;
-	int day = cal.get(Calendar.DATE);
+ 
 %>
 <!DOCTYPE html>
 <html>
@@ -47,7 +42,7 @@
 						for (int i = 2018; i > 1900; i--) {
 					%>
 
-					<option <%=(year == i) ? "selected" : ""%>><%=i%></option>
+					<option <%=(group.getYear() == i) ? "selected" : ""%>><%=i%></option>
 
 					<%
 						}
@@ -57,7 +52,7 @@
 						for (int i = 1; i < 13; i++) {
 					%>
 
-					<option <%=(month == i) ? "selected" : ""%>><%=i%></option>
+					<option <%=(group.getMonth() == i) ? "selected" : ""%>><%=i%></option>
 
 					<%
 						}
@@ -68,7 +63,7 @@
 						for (int i = 1; i < 32; i++) {
 					%>
 
-					<option <%=(day == i) ? "selected" : ""%>><%=i%></option>
+					<option <%=(group.getDate() == i) ? "selected" : ""%>><%=i%></option>
 
 					<%
 						}
