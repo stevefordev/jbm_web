@@ -1,0 +1,13 @@
+@font-face {
+  font-family: 'Koverwatch';
+  src: url('../fonts/koverwatch.eot');
+  src: url('../fonts/Koverwatch.woff') format('woff'),
+       url('../fonts/Koverwatch.ttf') format('truetype'),
+       url('../fonts/Koverwatch.svg#Koverwatch') format('svg'),
+       url('../fonts/koverwatch.woff2') format('woff2'),
+       url('../fonts/koverwatch.eot?#iefix') format('embedded-opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
