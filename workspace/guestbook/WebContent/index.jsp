@@ -106,12 +106,16 @@
 	left: 20px;
 	top: 55px;
 }
+
+h2:hover {
+	text-shadow: 0 0 2px #673AB7;	
+}
 </style>
 </head>
 <body>
 	<%@ include file="WEB-INF/template/header.jsp"%>
 	<h2>
-		<i class="far fa-clipboard"></i> 방명록
+		<i class="fas fa-paste"></i> 방명록
 	</h2>
 
 	<ul id="guestList">
@@ -138,21 +142,19 @@
 					<%=guest.getRegdate()%>
 				</time>
 			</div>
-			<p class="contents"><%=guest.getContents()%></p>
-			<% if (ip.equals(guest.getIp())) { %>
-			<a href="updateForm.jsp" title="수정폼으로 이동" class="btn update"><i
-				class="fas fa-edit"></i> 수정</a> <a href="deleteGuestbook.jsp?no=<%=guest.getNo() %>"
-			title="삭제하기" class="btn delete"><i class="fas fa-eraser"></i> 삭제</a>
-			<%
-				}
-			%>
+			<p class="contents"><%=guest.getContents()%></p> <%
+ 	if (ip.equals(guest.getIp())) {
+ %> <a href="updateForm.jsp?no=<%=guest.getNo()%>" title="수정폼으로 이동"
+			class="btn update"><i class="fas fa-edit"></i> 수정</a> <a
+			href="deleteGuestbook.jsp?no=<%=guest.getNo()%>" title="삭제하기"
+			class="btn delete"><i class="fas fa-eraser"></i> 삭제</a> <%
+ 	}
+ %>
 		</li>
 
 		<%
 			}
 		%>
-
-
 
 	</ul>
 	<div class="box_btn">
@@ -160,5 +162,8 @@
 			글쓰기</a>
 	</div>
 	<%@ include file="WEB-INF/template/footer.jsp"%>
+	<script src="js/jquery.js"></script>
+
+
 </body>
 </html>

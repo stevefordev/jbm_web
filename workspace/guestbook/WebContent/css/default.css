@@ -68,6 +68,10 @@ body {
 .btn:hover {
     background: #673AB7;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+    cursor: url('../img/index-finger-cursor.png'), auto;
+}
+.btn:active {
+	cursor: url('../img/click-gesture.png'), auto;
 }
 
 .box_btn {

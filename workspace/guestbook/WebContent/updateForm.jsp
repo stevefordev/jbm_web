@@ -1,5 +1,14 @@
+<%@page import="org.jbm.guestbook.dao.GuestbookDAO"%>
+<%@page import="org.jbm.guestbook.vo.Guest"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%
+	//1. 넘어온 파라미터 얻기
+	String noStr = request.getParameter("no");
+	int no = Integer.parseInt(noStr);
+
+	Guest guest = GuestbookDAO.selectOne(no);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,18 +56,18 @@
 		<i class="fas fa-pencil-alt"></i> 방명록 글수정
 	</h2>
 	<form method="post" action="updateGuestbook.jsp">
+		<input type="hidden" name="no" value="<%=guest.getNo()%>">
 		<fieldset>
 			<legend class="screen_out">글쓰기폼</legend>
 
 			<div class="row">
 				<label for="writer">작성자</label> <input id="writer"
-					placeholder="작성자를 입력" name="writer" />
-
+					placeholder="작성자를 입력" name="writer" value="<%=guest.getWriter()%>"
+					readonly />
 			</div>
 			<div class="row">
 				<label for="contents">내용</label>
-				<textarea id="contents" placeholder="내용을 입력"></textarea>
-
+				<textarea id="contents" name="contents" placeholder="내용을 입력"><%=guest.getContents()%></textarea>
 			</div>
 			<div class="row box_btn">
 				<button type="reset" class="btn">
@@ -67,7 +76,8 @@
 				<button type="submit" class="btn">
 					<i class="far fa-edit"></i> 방명록 수정
 				</button>
-				<a href="index.jsp" class="btn"><i class="fas fa-align-justify"></i> 방명록으로</a>
+				<a href="index.jsp" class="btn"><i class="fas fa-align-justify"></i>
+					방명록으로</a>
 			</div>
 		</fieldset>
 	</form>

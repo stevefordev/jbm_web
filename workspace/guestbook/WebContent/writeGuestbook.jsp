@@ -4,11 +4,14 @@
 	pageEncoding="UTF-8"%>
 <%
 	//1. post 방식 한글 처리
-	request.setCharacterEncoding("UTF-8");
+	//filter
 	
 	//2. 넘어온 파라미터 얻기
 	String writer = request.getParameter("writer");
 	String contents = request.getParameter("contents");
+	
+	contents = contents.replaceAll("<", "&lt;");
+	contents = contents.replaceAll(">", "&gt;");	
 	
 	//2.5 
 	String ip = request.getRemoteAddr();

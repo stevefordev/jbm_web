@@ -6,14 +6,14 @@ public class Guest {
 
 	private int no;
 	private String writer;
-	private String contents;	
+	private String contents;
 	private String ip;
 	private Timestamp regdate;
-	
-	public Guest () {
-		
+
+	public Guest() {
+
 	}
-	
+
 	public Guest(String writer, String contents, String ip) {
 		super();
 		this.writer = writer;
@@ -60,6 +60,10 @@ public class Guest {
 	public void setRegdate(Timestamp regdate) {
 		this.regdate = regdate;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		
+		return String.format("%d %s %s %s", this.no, this.writer, this.contents, this.ip);
+	}
 }

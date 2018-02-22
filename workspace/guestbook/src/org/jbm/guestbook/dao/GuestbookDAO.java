@@ -24,6 +24,23 @@ public class GuestbookDAO {
 		return result;
 	}
 	
+	public static int update(Guest guest) {
+		int result = 0;
+
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			result = session.update("guestbook.update", guest);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null)
+				session.close();
+		} // try~catch~finally end
+		
+		return result;
+	}
+	
 	public static int delete(int no) {
 		int result = 0;
 
@@ -56,5 +73,22 @@ public class GuestbookDAO {
 		} // try~catch~finally end
 		
 		return list;
+	}
+	
+	public static Guest selectOne(int no) {
+		Guest guest = null;
+
+		SqlSession session = null;
+		try {
+			session = SqlSessionUtil.getSession();
+			guest = session.selectOne("guestbook.selectOne", no);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null)
+				session.close();
+		} // try~catch~finally end
+		
+		return guest;
 	}
 }
