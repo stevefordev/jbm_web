@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<% if(session.getAttribute("loginUser")!=null) { %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,17 +45,12 @@
 <body>
 	<%@ include file="WEB-INF/template/header.jsp"%>
 	<h2>
-		<i class="fas fa-pencil-alt"></i> 방명록 글수정
+		<i class="fas fa-pencil-alt"></i> 방명록 글쓰기
 	</h2>
 	<form method="post" action="writeGuestbook.jsp">
 		<fieldset>
 			<legend class="screen_out">글쓰기폼</legend>
 
-			<div class="row">
-				<label for="writer">작성자</label> <input id="writer"
-					placeholder="작성자를 입력" name="writer" />
-
-			</div>
 			<div class="row">
 				<label for="contents">내용</label>
 				<textarea id="contents" name="contents" placeholder="내용을 입력"></textarea>
@@ -74,3 +70,10 @@
 	<%@ include file="WEB-INF/template/footer.jsp"%>
 </body>
 </html>
+
+<%} else { 
+	
+	response.sendRedirect("index.jsp");
+}%>
+
+

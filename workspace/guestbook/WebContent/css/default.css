@@ -60,20 +60,17 @@ body {
     border: none;
     padding: 12px 10px;
     text-decoration: none;
-    cursor: pointer;
     display: inline-block;
-    transition: .1s ease-in-out;
+    transition: .1s ease-in-out;      
+    cursor: url('../img/index-finger-cursor.png') 20 0, auto;
 }
 
 .btn:hover {
     background: #673AB7;
     box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
-    cursor: url('../img/index-finger-cursor.png'), auto;
+    
 }
-.btn:active {
-	cursor: url('../img/click-gesture.png'), auto;
-}
-
+ 
 .box_btn {
     text-align: right;
 }
@@ -118,4 +115,25 @@ body {
     100% {
         transform:  rotate(20deg) ;
     }
+}
+#header {
+	position: relative;
+}
+#loginBox, #logoutBox {
+   	position: absolute;
+   	right: 10px;
+   	bottom: 10px;
+   	line-height: 1em;
+}
+#logoutBox strong {
+	font-size: 24px;
+	color: #fff;
+}
+
+#logoutBox a {
+	font-size: 20px;
+	text-decoration: none;
+}
+#loginBox input {
+	width:120px;
 }

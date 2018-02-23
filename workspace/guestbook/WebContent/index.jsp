@@ -108,7 +108,7 @@
 }
 
 h2:hover {
-	text-shadow: 0 0 2px #673AB7;	
+	text-shadow: 0 0 2px #673AB7;
 }
 </style>
 </head>
@@ -143,7 +143,7 @@ h2:hover {
 				</time>
 			</div>
 			<p class="contents"><%=guest.getContents()%></p> <%
- 	if (ip.equals(guest.getIp())) {
+ 	if (loginUser != null && guest.getUserNo() == loginUser.getNo()) {
  %> <a href="updateForm.jsp?no=<%=guest.getNo()%>" title="수정폼으로 이동"
 			class="btn update"><i class="fas fa-edit"></i> 수정</a> <a
 			href="deleteGuestbook.jsp?no=<%=guest.getNo()%>" title="삭제하기"
@@ -157,10 +157,16 @@ h2:hover {
 		%>
 
 	</ul>
+	<%
+		if (loginUser != null) {
+	%>
 	<div class="box_btn">
 		<a href="writeForm.jsp" class="btn"><i class="far fa-edit"></i>
 			글쓰기</a>
 	</div>
+	<%
+		}
+	%>
 	<%@ include file="WEB-INF/template/footer.jsp"%>
 	<script src="js/jquery.js"></script>
 

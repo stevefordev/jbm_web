@@ -10,7 +10,6 @@
 	//2. 넘어온 파라미터 얻기
 	String noStr = request.getParameter("no");
 	int no = Integer.parseInt(noStr);
-	String writer = request.getParameter("writer");
 	String contents = request.getParameter("contents");
 	
 	contents = contents.replaceAll("<", "&lt;");
@@ -20,7 +19,9 @@
 	String ip = request.getRemoteAddr();
 	
 	//3. Guest객체 생성후 데이터 세팅
-	Guest guest = new Guest(writer, contents, ip);
+	Guest guest = new Guest();
+	guest.setContents(contents);
+	guest.setIp(ip);
 	guest.setNo(no);
 	
 	System.out.println(guest.toString());

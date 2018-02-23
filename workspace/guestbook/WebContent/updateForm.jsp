@@ -61,11 +61,6 @@
 			<legend class="screen_out">글쓰기폼</legend>
 
 			<div class="row">
-				<label for="writer">작성자</label> <input id="writer"
-					placeholder="작성자를 입력" name="writer" value="<%=guest.getWriter()%>"
-					readonly />
-			</div>
-			<div class="row">
 				<label for="contents">내용</label>
 				<textarea id="contents" name="contents" placeholder="내용을 입력"><%=guest.getContents()%></textarea>
 			</div>

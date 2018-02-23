@@ -9,16 +9,26 @@ public class Guest {
 	private String contents;
 	private String ip;
 	private Timestamp regdate;
-
+	private int userNo;
+	
 	public Guest() {
 
 	}
 
-	public Guest(String writer, String contents, String ip) {
+	public Guest(String writer, String contents, String ip, int userNo) {
 		super();
 		this.writer = writer;
 		this.contents = contents;
 		this.ip = ip;
+		this.userNo = userNo;
+	}
+	
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
 
 	public int getNo() {

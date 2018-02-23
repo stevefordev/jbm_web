@@ -8,24 +8,24 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 	<!-- SQL구문을 작성하는곳 -->
 	<insert id="insert" parameterType="Guest">
 		INSERT INTO guestbook(no,
-		writer, contents, regdate, ip)
+		writer, contents, regdate, ip, user_no)
 		VALUES(guestbook_seq.nextval, #{writer},
 		#{contents}, systimestamp,
-		#{ip})
+		#{ip}, #{userNo})
 	</insert>
 	<update id="update" parameterType="Guest">
-		UPDATE guestbook SET writer = #{writer}, contents=#{contents},
+		UPDATE guestbook SET contents=#{contents},
 		regdate=systimestamp, ip=#{ip}
 		WHERE no = #{no}
 	</update>
 	<select id="selectList" resultType="Guest">
-		SELECT no, writer, contents, regdate, ip
+		SELECT no, writer, contents, regdate, ip, user_no userNo
 		FROM guestbook
 		ORDER BY 1 DESC
 	</select>
 
 	<select id="selectOne" resultType="Guest" parameterType="int">
-		SELECT no, writer, contents, regdate, ip
+		SELECT no, writer, contents, regdate, ip, user_no userNo
 		FROM guestbook
 		WHERE no = #{no}
 	</select>
