@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="phonebook">
+	<!-- 각 mapper파일을 구별해야 되기 대문에 namespace가 필요함(테이블명) -->
+
+	<!-- SQL구문을 작성하는곳 -->
+
+	<select id="selectListByHostNo" parameterType="int" resultType="Phone">
+		SELECT no, name, phone, gender, birth_date birthDate, host_no hostNo,
+		regdate
+		FROM phonebook
+		WHERE host_no = #{hostNo}
+		ORDER BY name
+	</select>
+
+	<!-- 로그인한 호스트만 자신의 전화목록을 호출하기 위해 조건절에 no 와 hostNo 를 사용. 
+		조건절에 주키(no)만 있을경우 로그인한 유저라면 모든 전화목록을 주소창에 get방식으로 호출 가능 -->
+	<select id="selectOne" parameterType="Phone" resultType="Phone">
+		SELECT
+		no, name, phone, gender, birth_date birthDate, host_no hostNo, regdate
+		FROM phonebook
+		WHERE no = #{no} AND host_no = #{hostNo}
+	</select>
+
+	<insert id="insert" parameterType="Phone">
+		INSERT INTO phonebook (no,
+		name, phone, gender, birth_date, host_no, regdate)
+		VALUES
+		(phonebook_seq.nextval, #{name}, #{phone}, #{gender},
+		#{birthDate},#{hostNo},systimestamp)
+	</insert>
+
+	<update id="update" parameterType="Phone">
+		UPDATE phonebook SET
+		name=#{name},phone=#{phone},gender=#{gender},birth_date=#{birthDate}
+		WHERE no = #{no} AND host_no = #{hostNo}
+	</update>
+
+	<!-- phonebook 의 주키(phonebook.no)로만 삭제 가능하지만 로그한 유저의 전호번호목록만으로 한정짓기 위해서 
+		조건절에 hostNo 도 추가 -->
+	<delete id="delete" parameterType="Phone">
+		DELETE phonebook
+		WHERE no =
+		#{no} AND host_no = #{hostNo}
+	</delete>
+</mapper>
