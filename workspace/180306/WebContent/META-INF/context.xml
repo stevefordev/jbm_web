@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 톰캣이 데이터베이스와 자바하고(커넥션을 미리 몇개 만들어놓고) : 커넥션풀 -->
+<Context>
+	<Resource 
+	name="oraclexe"
+	auth="Container"
+	driverClassName="oracle.jdbc.OracleDriver"
+	username="test" 
+	password="1111"
+	url="jdbc:oracle:thin:@localhost:1521:xe"
+	type="javax.sql.DataSource"
+	maxIdle="20"
+	maxActive="20" 
+	maxWait="-1"	
+	 />
+	 <!-- maxIdle : 기본 커넥션 갯수 -->
+	 <!-- maxActive : 활성화 커넥션 갯수 -->
+	 <!-- maxWait : 기다리는 시간 -->	 
+	 
+</Context>
