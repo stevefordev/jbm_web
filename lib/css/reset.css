@@ -64,6 +64,7 @@ table {
     width:0;
     height:0;
     position: absolute;
+    visibility: hidden;
     line-height:0;
     text-indent: -9999px;
     overflow: hidden;
