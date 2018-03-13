@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="books">
+
+<select id="selectTotal"
+resultType="int">
+	SELECT COUNT(*)
+	FROM books
+</select>
+
+<select id="selectList" 
+resultType="vo.Book"
+parameterType="vo.PageVO">
+	SELECT no,title,publisher,publicationDate,
+       authorNo
+	FROM(SELECT no,title,publisher,publicationDate,
+	       authorNo, rownum r
+	     FROM(SELECT no,title,publisher,publication_date
+	                 publicationDate, author_no authorNo
+	          FROM books
+	          ORDER BY publicationDate DESC))
+	WHERE r BETWEEN #{start} AND #{end}       
+</select>
+	
+</mapper>
