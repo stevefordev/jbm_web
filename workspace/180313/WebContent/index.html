@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>카카오맵에 현재 위치 출력</title>
+<style>
+#map {
+	width:800px;
+	height:600px;
+	border:1px solid #424242;
+}
+</style>
+</head>
+<body>
+<button>현재 위치 이동</button>
+<div id="map"></div>
+<script src="js/jquery.js"></script>
+<script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=fa16ef8e02356708e5edf6e53f188037"></script>
+<script>
+
+var container = 
+	document.getElementById('map');
+
+//옛 다음본사(제주도)
+var latlng = new daum.maps.LatLng(33.450701, 126.570667);
+
+//주요옵션
+var options = {
+    center: latlng,
+    level: 3
+};
+
+var map = new daum.maps.Map(container, options);
+
+// 마커를 생성합니다
+var marker = new daum.maps.Marker({
+    position: latlng
+});
+
+// 마커가 지도 위에 표시되도록 설정합니다
+marker.setMap(map);
+
+
+$("button").click(function() {
+	
+	//현재 위치(위도,경도)
+	var geolocation = 
+		navigator.geolocation;
+	
+	//geolocation객체의 메서드
+	//1) getCurrentPosition(성공콜백,실패콜백,옵션) : 현재위치
+	//2) watchPosition(성공콜백,실패콜백,옵션) : 위치를 계속 
+	
+	
+	geolocation.getCurrentPosition(
+			function(position){
+		//position : 위도, 경도, 고도...		
+		//console.log(position);
+		
+		var lat = position.coords.latitude;
+		var lng = position.coords.longitude;
+		
+		
+		//현재위치의 latlng 객체
+		var latlng = new daum.maps.LatLng(lat,lng);
+		
+		//맵의 center를 세팅
+		map.setCenter(latlng);
+		
+		//마커의 포지션 세팅
+		marker.setPosition(latlng);
+		
+	},function(error){
+		alert("실패!");
+	});//getCurrentPosition() end
+	
+	
+});//click() end
+
+
+
+</script>
+</body>
+</html>
