@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<update id="updateHit"
+	parameterType="int">
+		UPDATE board 
+		SET hit = hit + 1
+		WHERE no = #{no}
+	</update>
+
+
+	<select id="selectOne"
+	resultType="Board"
+	parameterType="int">
+		SELECT no,title,contents,profile,writer,
+		writer_no writerNo, hit, likes, regdate
+		FROM board 
+		WHERE no = #{no}
+	</select>
+
+
+	<select id="selectTotal"
+	resultType="int">
+		SELECT count(*)
+		FROM board
+	</select>
+
+	
+	<select id="selectList"
+	resultType="Board"
+	parameterType="PageVO">
+		SELECT no,title,contents,writer,writerNo,
+		       profile,hit,likes,regdate
+		FROM (SELECT no,title,contents,writer,writerNo,
+		             profile,hit,likes,regdate,rownum r
+		      FROM (SELECT no,title,contents,writer,
+		                   writer_no writerNo,
+		                   profile,hit,likes,regdate
+		            FROM board
+		            ORDER BY regdate DESC))
+		WHERE r BETWEEN #{start} AND #{end} 
+	</select>
+	
+	<select id="selectList2"
+	resultType="Board"
+	parameterType="java.util.Map">
+		SELECT no,title,contents,writer,writerNo,
+		       profile,hit,likes,regdate
+		FROM (SELECT no,title,contents,writer,writerNo,
+		             profile,hit,likes,regdate,rownum r
+		      FROM (SELECT no,title,contents,writer,
+		                   writer_no writerNo,
+		                   profile,hit,likes,regdate
+		            FROM board
+		            ORDER BY regdate DESC))
+		WHERE r BETWEEN #{start} AND #{end} 
+	</select>
+	
+	<select id="selectListTest"
+	resultType="Board"
+	parameterType="java.util.Map">
+		SELECT no,title,contents,writer,
+               writer_no writerNo,
+               profile,hit,likes,regdate
+		FROM board
+		<if test="names!=null">
+			WHERE writer IN
+			
+			<foreach collection="names" separator=","  open="(" close=")" item="name">
+				#{name}
+			</foreach>
+		
+		</if>
+	</select>
+
+	<insert id="insert" 
+	parameterType="Board">
+	
+		<selectKey
+		keyProperty="no"
+		resultType="int"
+		 order="BEFORE">
+			SELECT board_seq.nextval
+			FROM dual
+		</selectKey>
+	
+		INSERT INTO board(no,title,contents,profile,
+		writer,writer_no,hit,likes,regdate)
+		VALUES(#{no},#{title},#{contents},#{profile},
+		#{writer},#{writerNo},
+		0,0,systimestamp)
+	</insert>
+	
+</mapper>
