@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+	<!-- 무조건 씁니다. -->
+	<mvc:annotation-driven />
+
+	<!-- /WEB-INF/view/와 .jsp 가 반복 -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/view/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+	<!-- Controller 가 필요없이 그냥 JSP 뷰(InternalResourceView) 를 이용 -->
+	<mvc:view-controller path="/index.ims" />
+
+	<!-- Controller 를 등록 -->
+	<bean p:groupsService-ref="groupsService"
+		class="org.jbm.ims.controller.GroupsController" />
+	<bean p:idolsService-ref="idolsService"
+		class="org.jbm.ims.controller.IdolsController" />
+</beans>
