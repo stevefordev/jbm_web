@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd">
+
+<!-- WAS의 DataSource을 얻어옴(JNDI) -->
+<jee:jndi-lookup id="dataSource"
+ jndi-name="java:comp/env/oraclexe"/>
+
+<!-- SqlSessionFactory 설정 -->
+<bean id="sqlSessionFactory"
+p:dataSource-ref="dataSource"
+p:configLocation="WEB-INF/mybatis-config.xml"
+class="org.mybatis.spring.SqlSessionFactoryBean"/>
+
+<!-- SqlSession 설정 -->
+<bean id="sqlSession"
+ class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory"/>
+</bean>
+
+<!-- DAO설정 -->
+<bean id="groupsDAO"
+p:session-ref="sqlSession"
+ class="org.jbm.ims.dao.GroupsDAOImpl"/>
+ 
+<bean id="idolsDAO"
+p:session-ref="sqlSession"
+ class="org.jbm.ims.dao.IdolsDAOImpl"/>
+ 
+<!-- Service설정 -->
+<bean id="groupsService"
+p:groupsDAO-ref="groupsDAO"
+ class="org.jbm.ims.service.GroupsServiceImpl"/>
+
+<bean id="idolsService"
+p:idolsDAO-ref="idolsDAO"
+ class="org.jbm.ims.service.IdolsServiceImpl"/>
+
+</beans>
