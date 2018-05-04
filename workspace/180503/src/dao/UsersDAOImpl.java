@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 import vo.User;
@@ -21,8 +22,14 @@ public class UsersDAOImpl implements UsersDAO {
   }
 
   @Override
-  public List<User> selectList() {
+  public List<User> selectList(Map<String, Object> pageRange) {
     // TODO Auto-generated method stub
-    return session.selectList("users.selectList");
+    return session.selectList("users.selectList", pageRange);
+  }
+
+  @Override
+  public int selectTotal() {
+    // TODO Auto-generated method stub
+    return session.selectOne("users.selectTotal");
   }
 }

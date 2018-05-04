@@ -12,9 +12,18 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		AND password = #{password}
 	</select>
 
-	<select id="selectList" resultType="User">
-		SELECT
-		no, id, password, nickname, regdate, profile
+	<select id="selectList" parameterType="java.util.Map" resultType="User">
+		SELECT no, id, password, nickname, profile, regdate, rownum r
+		FROM(SELECT no, id, password, nickname, profile, regdate, rownum r
+		    FROM(SELECT
+		    no, id, password, nickname, regdate, profile
+		    FROM users
+		    ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+	<select id="selectTotal" resultType="int">
+		SELECT count(*)
 		FROM users
 	</select>
 </mapper>

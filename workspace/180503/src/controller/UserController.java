@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import service.UsersService;
@@ -23,11 +24,12 @@ public class UserController {
   }
 
   @RequestMapping("index.html")
-  public String index(Model model, HttpSession session) {
+  public String index(Model model, HttpSession session,
+      @RequestParam(defaultValue = "1") int page) {
+
 
     if (session.getAttribute(this.LOGIN) != null) {
-      List<User> list = usersService.getUserList();
-      model.addAttribute("list", list);
+      model.addAllAttributes(usersService.getUserList(page));
     }
     return "index";
   }
@@ -70,6 +72,6 @@ public class UserController {
   @ResponseBody
   public List<User> sdfss() {
     System.out.println("ajax test");
-    return usersService.getUserList();
+    return null;
   }
 }
