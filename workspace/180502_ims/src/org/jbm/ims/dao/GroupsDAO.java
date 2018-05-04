@@ -13,4 +13,5 @@ public interface GroupsDAO {
 	
 	public int insert(Group group);
 
+	public Group selectOne(int no);
 }

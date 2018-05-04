@@ -12,8 +12,7 @@
 <h1>그룹 목록</h1>
 <ul>
 <c:forEach items="${list }" var="group">	
-	<li>번호 : ${group.no }
-	    / 이름 : ${group.name }
+	<li> <a href="/groupDetail.ims?no=${group.no }"> ${group.name }</a>
 	    / 데뷔일 : <fmt:formatDate 
 	    pattern="YYYY년 M월 d일"
 	    value="${group.debutDate }"/>

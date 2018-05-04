@@ -4,23 +4,28 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="groups">
 
-	<insert id="insert" 
-	parameterType="Group">
-		INSERT INTO groups(no,name,debut_date)
+	<insert id="insert" parameterType="Group">
+		INSERT INTO
+		groups(no,name,debut_date)
 		VALUES(groups_seq.nextval,#{name},#{debutDate})
 	</insert>
 
-	<delete id="delete"
-	parameterType="int">
+	<delete id="delete" parameterType="int">
 		DELETE groups
 		WHERE no = #{no}
 	</delete>
 
-	<select id="selectList"
-	resultType="Group">
-		SELECT no, name, debut_date debutDate
+	<select id="selectList" resultType="Group">
+		SELECT no, name, debut_date
+		debutDate
 		FROM groups
 		ORDER BY 1 DESC
+	</select>
+	<select id="selectOne" parameterType="int" resultType="Group">
+		SELECT no, name, debut_date
+		debutDate
+		FROM groups
+		WHERE no = #{no}
 	</select>
 
 </mapper>
