@@ -1,0 +1,49 @@
+@charset "UTF-8";
+/*paginate css*/
+.paginate {
+	font-size:18px;
+	font-weight:500;
+	margin: 10px;
+	font-family:arial,sans-serif;
+	text-align:center;
+}
+
+.paginate a, 
+.paginate span,
+.paginate strong{
+	color:#616161;
+	text-decoration:none;
+	padding:8px 16px;
+	border:1px solid transparent;
+	transition:.1s ease;
+	vertical-align: middle;
+	display:inline-block;
+}
+
+.paginate span {
+	color:#E0E0E0;
+	border-color:#E0E0E0;
+	cursor: not-allowed;
+}
+
+.paginate a:hover {
+	background:#FF3D00;
+	font-weight:bold;
+	color:#fff;
+	box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+#main .paginate strong {
+	background:#FF5722;
+	color:#fff;
+	cursor: not-allowed;
+	font-weight:bold;
+}
+
+.paginate span.next,
+.paginate span.prev {
+	border-color:#E1E1E1;
+	color:#E1E1E1;
+	cursor:default;
+	cursor:not-allowed;
+} 

@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: 'Cute Font', cursive;
+	height: 100%;
+	font-size: 26px;
+	color: #40404C;
+}
+
+#header {
+	width: 100%;
+	height: 20vh;
+	position: relative;
+	text-align: center;
+	background: #424242;
+}
+
+#header h1 {
+	height: 12vh;
+	font-size: 8vh;
+	line-height: 12vh;
+}
+
+#header h1>a {
+	text-decoration: none;
+	color: #fff;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
+#header h1>a>i {
+	font-weight: normal;
+}
+
+#header h1>a:hover {
+	color: #FF5722;
+	border-bottom: 3px solid #FF5722
+}
+#header .logout {
+	position: absolute;
+	right:10px;
+	top:10px;
+	
+}
+#gnb {
+	width: 100%;
+	height: 8vh;
+}
+
+#gnb ul {
+	width: 100%;
+	height: 100%;
+}
+
+#gnb li {
+	width: 50%;
+	height: 100%;
+	text-align: center;
+	float: left;
+	line-height: 8vh;
+}
+
+#gnb li>a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	color: #fff;
+	font-size: 4vh;
+	text-decoration: none;
+	transition: .2s ease-out;
+}
+
+#gnb li>a:hover {
+	background: #ddd;
+	color: #40404C;
+	font-size: 5vh;
+}
+
+#main {
+	width:100%;
+	height: 75vh;
+	overflow-y: scroll;
+}
+
+#main .aux {
+	width: calc(60%);
+	height:calc(100% - 2px);
+	max-width: 800px;
+	margin: auto;
+	border-top:1px solid transparent;
+	border-bottom:1px solid transparent;
+}
+
+#main h2 {
+	font-size: 46px;
+	text-align: center;
+	margin: 20px;
+	font-weight: bold;
+}
+
+#main strong {
+	color:#FF5722;
+	font-size:1.2em;
+	font-weight:bold;
+}
+#main span,#main strong {
+	vertical-align: middle;
+}
+
+a {
+	color: #40404C;
+}
+
+#footer {
+	width: 100%;
+	height: 5vh;
+	text-align: center;
+	background: #424242;
+	color: #fff;
+	line-height: 5vh;
+	clear: both;
+	position: absolute;
+	bottom: 0;
+	font-size: 24px;
+}
+
+a.btn {
+	text-decoration: none;
+}
+
+.btn {
+	border: 0;
+	margin: 0;
+	padding: 6px 17px;
+	background: #4D525A;
+	color: #fff;
+	text-decoration: none;
+	box-sizing: content-box;
+	display: inline-block;
+	font-size: 26px;
+	line-height: normal;
+	vertical-align: middle;
+	font: 26px 'Cute Font', "Kakao", "Noto Sans CJK KR Thin", "나눔고딕",
+		NanumGothic, "맑은고딕", "Malgun Gothic", "돋움", Dotum, "Helvetica Neue",
+		Helvetica, AppleSDGothicNeo, "Apple Color Emoji", "Segoe UI Emoji",
+		NotoColorEmoji, "Segoe UI Symbol", "Android Emoji", EmojiSymbols,
+		cursive;
+}
+
+button.btn {
+	cursor: pointer;
+}
+
+.btn>i {
+	font-size: 20px;
+}
+
+.btn:hover {
+	background: #FF5722;
+	color: #fff;
+	box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+/* firefox가 가진 버튼의 크기를 없애줌 */
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0
+}
+
+.box_btn {
+	padding: 10px;
+	text-align: right;
+}
+
+@media ( max-width :780px) {
+	#header h1>a {
+		font-size: 10vw;
+	}
+	#gnb li>a {
+		font-size: 7vw;
+	}
+}
+
+/* idolList */
+#idolList {
+	width: 100%;
+	margin-top: 20px;
+	overflow: hidden;
+	text-align: center;
+	padding-bottom: 15px;
+}
+
+#idolList  li {
+	width: 180px;
+	height: 220px;
+	float: left;
+	margin-left: 16px;
+	margin-bottom: 16px;
+	text-align:right;
+	vertical-align: middle;
+}
+
+#idolList  li>a {
+	display: block;
+	width: 160px;
+	height: 200px;
+	font-size: 30px;
+	padding: 9px;
+	border: 1px solid #424242;
+	text-decoration: none;
+	transition: .2s ease;
+}
+
+#idolList  li>a:hover {
+	color: #FF5722;
+	font-size: 34px;
+	background: #424242;
+	box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0
+		rgba(0, 0, 0, 0.19);
+}
+#idolList h3 {
+	font-size: 34px;
+}
