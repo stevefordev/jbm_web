@@ -15,17 +15,25 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE no = #{no}
 	</delete>
 
+	<select id="selectOne" resultType="Group" parameterType="int">
+		SELECT
+		no, name, debut_date
+		debutDate
+		FROM groups
+		WHERE no = #{no}
+	</select>
+
 	<select id="selectList" resultType="Group">
 		SELECT no, name, debut_date
 		debutDate
 		FROM groups
 		ORDER BY 1 DESC
 	</select>
-	<select id="selectOne" parameterType="int" resultType="Group">
-		SELECT no, name, debut_date
-		debutDate
-		FROM groups
+
+	<update id="update" parameterType="Group">
+		UPDATE groups SET name =
+		#{name}, debut_date = #{debutDate}
 		WHERE no = #{no}
-	</select>
+	</update>
 
 </mapper>

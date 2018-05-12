@@ -14,11 +14,12 @@ import org.springframework.stereotype.Service;
 public class GroupsServiceImpl implements GroupsService {
 
   private GroupsDAO groupsDAO;
-  private IdolsDAO idolsDAO;
 
   public void setGroupsDAO(GroupsDAO groupsDAO) {
     this.groupsDAO = groupsDAO;
   }
+
+  private IdolsDAO idolsDAO;
 
   public void setIdolsDAO(IdolsDAO idolsDAO) {
     this.idolsDAO = idolsDAO;
@@ -46,14 +47,23 @@ public class GroupsServiceImpl implements GroupsService {
   }
 
   @Override
-  public Map<String, Object> getGroup(int no) {
+  public boolean update(Group group) {
     // TODO Auto-generated method stub
-    Map<String, Object> map = new ConcurrentHashMap();
+    return 1 == groupsDAO.update(group);
+  }
+
+  @Override
+  public Map<String, Object> getGroup(int no) {
+
     Group group = groupsDAO.selectOne(no);
+
     List<Idol> list = idolsDAO.selectList(no);
 
+    Map<String, Object> map = new ConcurrentHashMap();
+
     map.put("group", group);
-    map.put("list", list);
+    map.put("idols", list);
+
     return map;
   }
 

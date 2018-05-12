@@ -28,6 +28,9 @@
 	<bean id="idolsDAO" p:session-ref="sqlSession"
 		class="org.jbm.ims.dao.IdolsDAOImpl" />
 
+	<bean id="adminsDAO" p:session-ref="sqlSession"
+		class="org.jbm.ims.dao.AdminDAOImpl" />
+
 	<!-- Service설정 -->
 	<bean id="groupsService" p:groupsDAO-ref="groupsDAO"
 		p:idolsDAO-ref="idolsDAO"
@@ -35,5 +38,8 @@
 
 	<bean id="idolsService" p:idolsDAO-ref="idolsDAO"
 		class="org.jbm.ims.service.IdolsServiceImpl" />
+
+	<bean id="adminsService" p:adminDAO-ref="adminsDAO"
+		class="org.jbm.ims.service.AdminsServiceImpl" />
 
 </beans>

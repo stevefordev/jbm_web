@@ -12,6 +12,9 @@ public interface GroupsDAO {
 	public int delete(int no);
 	
 	public int insert(Group group);
-
+	
+	public int update(Group group);
+	
 	public Group selectOne(int no);
+
 }

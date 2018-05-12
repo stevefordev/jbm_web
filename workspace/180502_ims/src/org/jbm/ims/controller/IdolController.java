@@ -1,16 +1,25 @@
 package org.jbm.ims.controller;
 
 
+import java.io.File;
+import java.util.UUID;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import org.jbm.ims.service.GroupsService;
 import org.jbm.ims.service.IdolsService;
+import org.jbm.ims.util.ResizeImageUtil;
 import org.jbm.ims.vo.Idol;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 public class IdolController {
@@ -46,7 +55,7 @@ public class IdolController {
   }
 
   // idolForm.jsp로 이동(GET)
-  @RequestMapping(value = "/insertIdol.ims", method = RequestMethod.GET)
+  @RequestMapping(value = "/idol/register", method = RequestMethod.GET)
   public String insertIdol(Model model) {
 
     model.addAttribute("groups", groupsService.getList());
@@ -54,14 +63,15 @@ public class IdolController {
     return "idolForm";
   }
 
-  @RequestMapping("/idolDetail.ims")
-  public void sdafasdfasdf(int no, Model model) {
+  @RequestMapping(value = "/idol/{idolNo}", method = RequestMethod.GET)
+  public String sdafasdfasdf(@PathVariable int idolNo, Model model, @RequestHeader String referer) {
 
-    model.addAttribute("idol", idolsService.getIdol(no));
+    System.out.println(referer);
 
+    model.addAttribute("idol", idolsService.getIdol(idolNo));
+    model.addAttribute("referer", referer);
+    return "idolDetail";
   }
-
-
 
   /*
    * 메서드에 인자로 VO를 넣으면 ModelAttribute라고 합니다.
@@ -75,57 +85,60 @@ public class IdolController {
    */
 
   // POST방식
-  @RequestMapping(value = "/insertIdol.ims", method = RequestMethod.POST)
-  public String test(@ModelAttribute Idol idol, BindingResult result) {
+  @RequestMapping(value = "/idol", method = RequestMethod.POST)
+  public String test(@ModelAttribute Idol idol, BindingResult result, MultipartFile upload,
+      HttpServletRequest request) {
 
-    // System.out.println("이름 : "+idol.getName());
-    // System.out.println("키 : "+idol.getHeight());
-    // System.out.println("몸무게 : "+idol.getWeight());
-    // System.out.println("생년월일 : " +idol.getBirthDate());
-    // System.out.println("그룹번호 : " +idol.getGroupNo());
+    // 톰캣의 img 폴더 경로
+    ServletContext context = request.getServletContext();
+    String path = context.getRealPath("img");
 
+    // upload 경로 (원본 저장)
+    String uploadPath = path + File.separator + "upload" + File.separator;
+
+    // profile 경로 (프로필 160 * 160)
+    String profilePath = path + File.separator + "profile" + File.separator;
+
+    // UUID 를 이용하여 이름을 랜덤하게
+    UUID uuid = UUID.randomUUID();
+
+    String fileName = upload.getOriginalFilename();
+
+    int dotIdx = fileName.lastIndexOf(".");
+
+    fileName = fileName.substring(dotIdx, fileName.length());
+    fileName = uuid + fileName;
+
+    File file = new File(uploadPath + fileName);
+
+    try {
+      upload.transferTo(file);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    ResizeImageUtil.resize(uploadPath + fileName, profilePath + fileName, 160);
+
+    idol.setImage(fileName);
     idolsService.register(idol);
 
-    // int count = result.getErrorCount();
-    //
-    // System.out.println("에러 갯수 : " + count);
-    //
-    // List<FieldError> errorList =
-    // result.getFieldErrors();
-    //
-    // for(FieldError error : errorList) {
-    // System.out.println("파라미터명 : "+error.getField());
-    // System.out.println(error.getCode());
-    // }
-
-    // System.out.println("이름 : "+idol.getName());
-    // System.out.println("키 : "+idol.getHeight());
-    // System.out.println("몸무게 : "+idol.getWeight());
-
-    return "redirect:/idolList.ims";
+    return "redirect:/idol/" + idol.getNo();
   }
 
-  @RequestMapping(value = "/deleteIdol.ims", method = RequestMethod.GET)
-  public String sdfasf() {
-
-    return "redirect:http://jr.naver.com";
-  }
-
-  @RequestMapping(value = "/deleteIdol.ims", method = RequestMethod.POST)
-  public String deleteIdol(int no) {
+  @RequestMapping(value = "/idol/{no}", method = RequestMethod.DELETE)
+  public String deleteIdol(@PathVariable int no, String referer, HttpServletRequest request) {
 
     idolsService.remove(no);
 
-    return "redirect:/idolList.ims";
+    return "redirect:" + referer;
   }
 
-  @RequestMapping("/idolList.ims")
-  public void idolList(@RequestParam(defaultValue="1") int page, Model model) {
+  @RequestMapping("/idol/page/{page}")
+  public String idolList(@PathVariable int page, Model model) {
 
     model.addAllAttributes(idolsService.getIdols(page));
-    
+
+    return "idolList";
   }
-
-
 
 }

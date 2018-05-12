@@ -2,7 +2,7 @@ package org.jbm.ims.util;
 
 public class PaginateUtil {
 
-	private static String getPaginate(int pageNo, int total, int numPage, int numBlock, String url) {
+	public static String getPaginate(int pageNo, int total, int numPage, int numBlock, String url) {
 		// 전체 페이지수
 		int totalPage = (int) Math.ceil((double) total / numPage);
 

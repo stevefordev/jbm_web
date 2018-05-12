@@ -3,17 +3,21 @@
 PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="idols">
-	
+
 	<select id="selectTotal" resultType="int">
 		SELECT COUNT(*)
 		FROM idols
 	</select>
+
 	<insert id="insert" parameterType="Idol">
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT idols_seq.nextval FROM dual
+		</selectKey>
 		INSERT INTO
-		idols(no,name,height,weight,
+		idols(no,name,height,weight,image,
 		birth_date,group_no)
-		VALUES(idols_seq.nextval,#{name},#{height},
-		#{weight},#{birthDate},#{groupNo})
+		VALUES(#{no},#{name},#{height},
+		#{weight}, #{image},#{birthDate},#{groupNo})
 	</insert>
 
 	<update id="update" parameterType="Idol">
@@ -28,23 +32,36 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		WHERE no = #{no}
 	</update>
 
-
 	<delete id="delete" parameterType="int">
 		DELETE idols
 		WHERE no = #{no}
 	</delete>
 
-	<select id="selectList" parameterType="java.util.Map" resultType="Idol">
-		SELECT no, name, height,
-		weight, birthDate, groupNo, groupName, rownum r
-		FROM(SELECT no, name, height, weight, birthDate, groupNo, groupName, rownum r
-		FROM (SELECT
-		i.no no, i.name name, birth_date
-		birthDate, height, weight, group_no
-		groupNo,
+	<select id="selectListByGroupNo" resultType="Idol"
+		parameterType="int">
+		SELECT no,name,height,weight,
+		birth_date birthDate,image,
+		group_no groupNo
+		FROM idols
+		WHERE group_no = #{no}
+	</select>
+
+	<select id="selectList" parameterType="map" resultType="Idol">
+		SELECT
+		no,name,height,weight,birthDate, image,
+		groupNo, groupName
+		FROM(SELECT
+		no,name,height,weight, image ,birthDate,
+		groupNo, groupName, rownum r
+		FROM(SELECT i.no no, i.name name,
+		birth_date
+		birthDate, height, weight,
+		image,
+		group_no groupNo,
 		g.name groupName
 		FROM idols i, groups g
-		WHERE i.group_no = g.no
+		WHERE
+		i.group_no = g.no
 		ORDER BY 1 DESC))
 		WHERE r BETWEEN #{start} AND #{end}
 	</select>
@@ -53,19 +70,12 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 		SELECT
 		i.no no, i.name name, birth_date
 		birthDate, height, weight, group_no
-		groupNo,
+		groupNo,image,
 		g.name groupName
 		FROM idols i, groups g
-		WHERE i.group_no = g.no
+		WHERE i.group_no =
+		g.no
 		AND i.no = #{no}
-	</select>
-
-	<select id="selectListByGroupNo" parameterType="int"
-		resultType="Idol">
-		SELECT no, name, birth_date birthDate, height, weight,
-		group_no groupNo
-		FROM idols
-		WHERE group_no = #{no}
 	</select>
 
 </mapper>

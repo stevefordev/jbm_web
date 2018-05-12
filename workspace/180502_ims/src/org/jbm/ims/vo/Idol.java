@@ -5,14 +5,22 @@ import java.sql.Date;
 public class Idol {
 	
 	private int no,height,weight,groupNo;
-	private String name, groupName;
+	private String name, groupName, image;
 	private Date birthDate;
 	
 	public Idol() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public String getGroupName() {
+	public String getImage() {
+    return image;
+  }
+
+  public void setImage(String image) {
+    this.image = image;
+  }
+
+  public String getGroupName() {
 		return groupName;
 	}
 

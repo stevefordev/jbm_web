@@ -10,12 +10,15 @@ PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
 		alias="Group"/>
 		<typeAlias type="org.jbm.ims.vo.Idol"
 		alias="Idol"/>
+		<typeAlias type="org.jbm.ims.vo.Admin"
+		alias="Admin"/>
 	</typeAliases>
 	
 	<!-- mapper파일들의 경로 설정 -->
 	<mappers>
 		<mapper resource="org/jbm/ims/mapper/groups.xml"/>
 		<mapper resource="org/jbm/ims/mapper/idols.xml"/>
+		<mapper resource="org/jbm/ims/mapper/admins.xml"/>
 	</mappers>
 	
 </configuration>

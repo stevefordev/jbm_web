@@ -6,19 +6,55 @@
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>${group.name }상세페이지</title>
+<title>${group.name}상세페이지</title>
+<c:import url="/WEB-INF/view/template/link.jsp"></c:import>
+<style>
+#main p {
+	font-size: 40px;
+	color: #FF5722;
+	line-height: 200px;
+	text-align: center;
+}
+</style>
 </head>
 <body>
-	<h1>${group.no }번${group.name }</h1>
-	<h2>데뷔일 :
-	<fmt:formatDate pattern="YYYY년 M월 d일" value="${group.debutDate }" />
+	<c:import url="/WEB-INF/view/template/header.jsp"></c:import>
+	<h2>
+		<span>${group.no}번</span> <strong>${group.name}</strong>
 	</h2>
-	<h2>멤버</h2>
-	<ul>
-		<c:forEach items="${list }" var="member">
-			<li><a href='/idolDetail.ims?no=${member.no}'>${member.name}</a></li>
-		</c:forEach>
-	</ul>
-	<a href="/groupList.ims">그룹목록으로</a>
+	<h3>
+		데뷔일 :
+		<fmt:formatDate value="${group.debutDate }" pattern="YYYY년 M월 d일" />
+	</h3>
+	<h2>멤버목록</h2>
+	<c:choose>
+		<c:when test="${idols.isEmpty() }">
+			<p>멤버가 없습니다.</p>
+		</c:when>
+		<c:otherwise>
+			<c:import url="/WEB-INF/view/template/idolList.jsp"></c:import>
+		</c:otherwise>
+	</c:choose>
+	<div class="box_btn">
+		<a class="btn" href="/group/${group.no }/update"> <i
+			class="fas fa-wrench"></i>수정
+		</a>
+		<button class="btn" form="deleteForm">
+			<i class="fas fa-trash-alt"></i>삭제
+		</button>
+		<a class="btn" href="/group"> <i class="fas fa-external-link-alt"></i>
+			그룹목록으로
+		</a>
+	</div>
+	
+	<form id="deleteForm" action="/group/${group.no }" method="post">
+		<input type="hidden" name="_method" value="DELETE" />
+	</form>
+	<c:import url="/WEB-INF/view/template/footer.jsp"></c:import>
+	<c:if test="${isError }">
+		<script>
+			alert("${group.name}에는 아이돌이 존재하므로 삭제 불가능합니다.");
+		</script>
+	</c:if>
 </body>
 </html>

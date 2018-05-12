@@ -32,8 +32,14 @@ public class GroupsDAOImpl implements GroupsDAO {
   }
 
   @Override
-  public Group selectOne(int no) {
+  public int update(Group group) {
     // TODO Auto-generated method stub
+    return session.update("groups.update", group);
+  }
+
+  @Override
+  public Group selectOne(int no) {
     return session.selectOne("groups.selectOne", no);
   }
+
 }
