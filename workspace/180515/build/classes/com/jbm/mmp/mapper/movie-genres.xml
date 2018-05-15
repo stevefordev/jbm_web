@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movieGenres">
+
+<insert id="insert" parameterType="MovieGenre">
+	INSERT INTO movie_genres(no,genre_no,movie_no)
+	VALUES(movie_genres_seq.nextval,#{genreNo},#{movieNo})
+</insert>
+
+<delete id="delete" parameterType="int">
+	DELETE movie_genres
+	WHERE movie_no = #{no}
+</delete>
+
+<select id="selectList" resultType="MovieGenre" parameterType="int">
+	SELECT genre_no genreNo
+	FROM movie_genres 
+	WHERE movie_no = #{no}
+</select>
+
+</mapper>

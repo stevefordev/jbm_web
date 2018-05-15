@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="genres">
+
+	<insert id="insert" parameterType="Genre">
+		INSERT INTO genres(no,name,mania_no,movie_count)
+		VALUES(genres_seq.nextval,#{name},#{maniaNo},#{movieCount})
+	</insert>
+
+	<select id="selectCount" resultType="int" parameterType="string">
+		SELECT COUNT(*)
+		FROM genres
+		WHERE name = #{name}
+	</select>
+
+	<select id="selectList" resultType="Genre">
+		SELECT g.no no,g.name name,g.mania_no maniaNo,g.movie_count movieCount,
+		g.regdate, m.nickname nickname,
+		m.profile profile
+		FROM genres g, manias m
+		WHERE g.mania_no = m.no
+		ORDER BY movie_count DESC, no DESC
+	</select>
+
+	<update id="updateCount" parameterType="int">
+		UPDATE genres
+		SET movie_count =
+		(SELECT COUNT(*) FROM movie_genres WHERE genre_no = #{no})
+		WHERE no = #{no}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		DELETE genres
+		WHERE no = #{no}
+	</delete>
+
+</mapper>

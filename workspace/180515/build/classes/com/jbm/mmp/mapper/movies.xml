@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movies">
+
+	<delete id="delete" parameterType="int">
+		DELETE movies
+		WHERE no = #{no}
+	</delete>
+
+	<update id="update" parameterType="Movie">
+		UPDATE movies
+		SET title = #{title},
+		eng_title = #{engTitle},
+		release_date= #{releaseDate},
+		state = #{state},
+		poster = #{poster},
+		director = #{director},
+		actors = #{actors},
+		summary = #{summary},
+		rating = #{rating}
+		WHERE no = #{no}
+	</update>
+	
+	<insert id="insert" parameterType="Movie">
+		<selectKey order="BEFORE" keyProperty="no" resultType="int">
+			SELECT movies_seq.nextval
+			FROM dual
+		</selectKey>
+		INSERT INTO
+		movies(no,title,eng_title,release_date,state,director,actors,summary,rating,poster,mania_no)
+		VALUES(#{no},#{title},#{engTitle},#{releaseDate},#{state},#{director},#{actors},#{summary},#{rating},#{poster},#{maniaNo})
+	</insert>
+
+	<select id="selectList" resultType="Movie"
+		parameterType="PageVO">
+		SELECT
+		no,title,engTitle,releaseDate,state,director,actors,summary,rating,poster,maniaNo,regdate,nickname,profile
+		FROM(SELECT
+		no,title,engTitle,releaseDate,state,director,actors,summary,rating,poster,maniaNo,regdate,nickname,profile,rownum
+		r
+		FROM(SELECT m.no no, m.title title ,m.eng_title engTitle,m.release_date
+		releaseDate,m.state state,
+		m.director director,m.actors actors ,m.summary summary ,m.rating rating
+		,m.poster poster,m.mania_no maniaNo, m.regdate regdate,
+		s.nickname nickname ,s.profile profile
+		FROM movies m, manias s
+		WHERE m.mania_no = s.no
+		ORDER BY release_date DESC, regdate DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="selectTotal" resultType="int">
+		SELECT COUNT(*)
+		FROM movies
+	</select>
+
+	<select id="selectOne" resultType="Movie" parameterType="int">
+		SELECT m.no no, m.title title ,m.eng_title engTitle,m.release_date
+		releaseDate,m.state state,
+		m.director director,m.actors actors ,m.summary summary ,m.rating rating
+		,m.poster poster,m.mania_no maniaNo, m.regdate regdate,
+		s.nickname nickname ,s.profile profile
+		FROM movies m, manias s
+		WHERE m.mania_no = s.no
+		AND m.no = #{no}
+	</select>
+
+</mapper>
