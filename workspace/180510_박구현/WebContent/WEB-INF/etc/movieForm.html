@@ -1,0 +1,281 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 입력 폼</title>
+
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/tui-date-picker.css">
+    <style>
+        #content{
+            width: 1000px;
+            margin: auto;
+            margin-bottom: 20px;
+        }
+        #formBox .row {
+            margin: 20px 0;
+        }
+        #formBox .label {
+            display: inline-block;
+            width: 100px;
+            font-size: 22px;
+            text-align: right;
+            font-weight: 700;
+            color: #757575;
+            margin-right: 10px;
+            vertical-align: top;
+        }
+
+        #content>h2{
+            color: #5542BB;
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        #formBox{
+            width: 600px;
+            border: 1px solid #5542BB;
+            margin: auto;
+        }
+        #director {
+            width:430px;
+        }
+        #formBox .row{
+            margin: 20px 0;
+        }
+        #formBox input, #formBox textarea, #formBox select{
+            font-size: 20px;
+            outline: none;
+            font-family: 'Do Hyeon', sans-serif;
+            padding:2px 5px;
+            color: #757575;
+        }
+
+        #formBox textarea {
+            vertical-align: top;
+            resize:none;
+            width:430px;
+        }
+
+        #actors {
+
+            height:60px;
+
+        }
+        #summary {
+            height:80px;
+        }
+        #formBox input:focus{
+            border-color: #8373dd;
+        }
+        #formBox select:focus{
+            border-color: #8373dd;
+        }
+
+        #btnBox {
+            padding: 10px 0;
+            text-align: right;
+            margin-right: 10px;
+        }
+
+        .genre.row label {
+            font-size: 22px;
+            font-weight: 700;
+            color: #757575;
+        }
+
+        #wrapper .tui-datepicker {
+            font-family:"맑은 고딕",sans-serif;
+            z-index:10000;
+        }
+
+        .tui-calendar td, .tui-calendar th {
+            vertical-align: middle;
+        }
+
+    </style>
+   </head>
+<body>
+
+
+
+
+<div id="header">
+    <div class="aux">
+        <h1 class="logo">
+            <a href="">
+                <img src="img/logo.png"/>
+            </a>
+        </h1><!--.logo -->
+        <ul id="navList">
+            <li class="nav
+
+            on
+
+            "><a href=""> 영화</a></li>
+            <li class="nav
+
+            "><a href=""> 장르</a></li>
+        </ul><!--#naviList -->
+        <div id="loginBox">
+            <h2 class="screen_out">유저정보</h2>
+            <img src="profile/default.png" width="60" height="60" alt="테스터" title="테스터"/>
+                <button class="btn"><i class="fas fa-sign-out-alt"></i> 로그아웃</button>
+        </div><!--// loginBox  -->
+    </div><!--//.aux -->
+</div><!--//#header -->
+<div id="content">
+    <h2>영화 입력
+    </h2>
+    <div id="formBox">
+        <form>
+            <fieldset>
+                <legend class="screen_out">영화 입력 폼</legend>
+                <div class="row">
+                    <label class="label" for="title">영화명</label>
+                    <input id="title" title="영화명을 입력해주세요" placeholder="영화명 입력"/>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="engTitle">영어이름</label>
+                    <input id="engTitle" value=""
+                           title="영어 영화명을 입력해주세요" placeholder="영어 영화명 입력"/>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="director">감독</label>
+                    <input id="director"
+                           title="감독을 입력해주세요" placeholder="감독 입력"/>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="actors">배우들</label>
+                    <textarea id="actors" title="배우들을 입력해주세요" placeholder="배우들 입력"></textarea>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="release_date">개봉일</label>
+                    <div class="tui-datepicker-input tui-datetime-input tui-has-focus">
+                        <input type="text" id="datepicker-input" name="releaseDate" autocomplete="off" aria-label="Date-Time">
+                        <span class="tui-ico-date"></span>
+                    </div>
+                    <div id="wrapper" style="margin-top: -1px;"></div>
+                </div><!--//.row -->
+
+
+                <div class="row genre">
+                    <h3 class="label">장르</h3>
+
+                    <label>
+                        <input type="checkbox"
+                               name="genre"  />
+                        코미디
+                    </label>
+
+                    <label>
+                        <input type="checkbox"
+                               name="genre"  />
+                        멜로
+                    </label>
+
+                    <label>
+                        <input type="checkbox"
+                               name="genre"  />
+                        에로
+                    </label>
+
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="movieRating">관람가</label>
+
+                    <select name="rating" id="movieRating" title="관람가능 연령을 선택해주세요">
+                        <option value="G"
+
+                        >전체관람가</option>
+                        <option value="Y"
+
+                        >12세 관람가</option>
+                        <option value="T"
+
+                        >15세 관람가</option>
+                        <option value="A"
+
+                        >19세 관람가</option>
+                    </select>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="state">개봉상태</label>
+                    <select id="state" title="관람가능 연령을 선택해주세요">
+                        <option >개봉중</option>
+                        <option >개봉 종료</option>
+                    </select>
+                </div><!--//.row -->
+                <div class="row">
+                    <label class="label" for="summary">줄거리</label>
+                    <textarea id="summary" title="줄거리를 입력해주세요" placeholder="줄거리 입력"></textarea>
+                </div><!--//.row -->
+                <div class="row" id="profileRow">
+                    <span class="label">포스터</span>
+                    <input type="file" id="poster"/>
+                </div><!--//.row -->
+                <div id="btnBox">
+                    <button type="submit" class="btn" form="form">
+                        <i class="fas fa-save"></i> 영화 등록
+                    </button>
+                    <button type="reset" class="btn" form="form">
+                        <i class="fa fa-undo"></i> 리 셋
+                    </button>
+                    <a class="btn" href="">취소</a>
+                </div>
+            </fieldset>
+        </form>
+
+    </div><!--//#formBox-->
+
+
+
+</div><!--//#content -->
+<div id="footer">
+    <div class="aux">
+        <div id="policy">
+            <h4 class="screen_out">정책 및 약관</h4>
+            <ul>
+                <li><a href="">회사소개</a></li><!--
+	 --><li><a href="">광고</a></li><!--
+	 --><li><a href="">검색등록</a></li><!--
+	 --><li><a href="">제휴제안</a></li><!--
+	 --><li><a href="">이용약관</a></li><!--
+	 --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+	 --><li><a href="">청소년보호정책</a></li><!--
+	 --><li><a href="">고객센터</a></li>
+            </ul>
+        </div><!-- //policy  -->
+        <address>&copy; 2018 <a href="">jbm.com</a></address>
+    </div><!--//.aux -->
+</div><!-- //footer  -->
+<script src="js/jquery.js"></script>
+<script src="js/tui-code-snippet.min.js"></script>
+<script src="js/tui-date-picker.min.js"></script>
+<script>
+    var datepicker = new tui.DatePicker('#wrapper', {
+
+
+
+        date: new Date(),
+
+
+        input: {
+            element: '#datepicker-input',
+            format: 'yyyy-MM-dd'
+        },
+        language:'ko'
+    });
+
+</script>
+</body>
+</html>

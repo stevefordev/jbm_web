@@ -1,0 +1,277 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <style>
+
+        #content{
+            width: 1000px;
+            margin: auto;
+            position:relative;
+            padding-bottom:100px;
+        }
+
+        #content a{
+            text-decoration: none;
+            color: #ffffff;
+        }
+        #header h1.logo{
+            height: 60px;
+            width: 50px;
+            /*background: red;*/
+            position: absolute;
+            left: 475px;
+        }
+
+        #content h2 {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            margin: 20px;
+        }
+
+        #joinBox {
+            width: 600px;
+            margin: auto;
+            position: relative;
+        }
+
+        #joinBox .row {
+            margin: 20px 0;
+        }
+
+        #joinBox .label {
+            width: 160px;
+            display: inline-block;
+            font-size: 21px;
+            text-align: right;
+            margin-right: 10px;
+            color: #666;
+            height: 20px;
+            line-height: 20px;
+        }
+
+        #joinBox input {
+            border: 1px solid #E1E1E1;
+            width: 333px;
+            height: 28px;
+            font-size: 21px;
+            font-family: 'Do Hyeon', sans-serif;
+            font-weight: 500;
+            padding: 6px;
+            color: #606060;
+            transition: .2s ease;
+        }
+
+        #joinBox #profile {
+            font-size: 15px;
+            cursor: pointer;
+            height: 30px;
+        }
+
+        #profileBox {
+            width:140px;
+            height:140px;
+            text-align: center;
+            font-size:140px;
+            position: absolute;
+            top:10px;
+            left:250px;
+            margin:0px;
+            color: #ddd;
+            border-radius: 140px;
+        }
+
+        #profileBox.no_image #profileImg {
+            display: none;
+        }
+
+        #profileBox label {
+            width: 40px;
+            height:40px;
+            position: absolute;
+            bottom:4px;
+            right:4px;
+            background: #9E9E9E;
+            font-size:20px;
+            line-height:40px;
+            text-align: center;
+            border-radius: 40px;
+            cursor: pointer;
+            color:#fff;
+            border:2px solid #fff;
+        }
+        #profileBox label:hover {
+            background: #5542BB;
+        }
+
+        #profileRow {
+            position: relative;
+
+        }
+
+        #profileImg {
+            width:140px;
+            height:140px;
+            position: absolute;
+            left:0;
+            top:0;
+            background: red;
+            border-radius: 140px;
+        }
+
+        #profileBox.no_image .delete {
+            display: none;
+        }
+
+        .delete {
+            width:24px;
+            height:24px;
+            border-radius: 24px;
+            text-align: center;
+            line-height:24px;
+            cursor: pointer;
+            position: absolute;
+            border: none;
+            outline: none;
+            right:8px;
+            top:8px;
+            background: #9E9E9E;
+            display: block;
+        }
+        .delete:hover {
+            background: #5542BB;
+            color:#fff;
+        }
+        .box_btn{
+            width: 330px;
+            height: 40px;
+            /*background: red;*/
+            position: absolute;
+            right: 0;
+        }
+        #joinBox input:focus{
+            color: #8373dd;
+            border: 1px solid #8373dd;
+            outline: none;
+        }
+        #joinBox input:focus::placeholder{
+            color: #8373dd;
+        }
+        #content h2 {
+            font-size: 50px;
+            font-weight: 700;
+            color: #5542BB;
+            margin: 20px;
+            text-align: center;
+        }
+
+    </style>
+<body>
+<div id="header">
+    <div class="aux">
+        <h1 class="logo">
+            <a href="">
+                <img src="img/logo.png"/>
+            </a>
+        </h1><!--.logo -->
+    </div><!--//.aux -->
+</div><!--//#header -->
+<div id="content">
+    <h2>회원가입 폼</h2>
+    <div id="joinBox">
+        <form>
+            <fieldset>
+                <legend class="screen_out">회원가입폼</legend>
+                <div class="row">
+                    <label class="label" for="id">아이디</label>
+                    <input id="id"
+                           placeholder="영어,숫자로 4~20자 입력"
+                           title="영어,숫자로 4~20자 입력"
+                           pattern="[\w]{4,20}"
+                           required/>
+                </div>
+                <div class="row">
+                    <label class="label" for="nickname">별 명</label>
+                    <input id="nickname"
+                           required pattern="[ㄱ-힣|0-9]{1,10}"
+                           placeholder="10자 내로 한글,숫자 입력"
+                           title="10자 내로 한글,숫자 입력"
+                           />
+                </div>
+                <div class="row">
+                    <label class="label" for="pwd">비밀번호</label>
+                    <input type="password" id="pwd"
+                           required pattern="[\w]{4,32}"
+                           placeholder="4~32자로 입력"
+                           title="4~32자로 입력"
+                           />
+                </div>
+                <div class="row">
+                    <label class="label" for="confirm">비밀번호 확인</label>
+                    <input type="password" id="confirm"
+                           pattern="[\w]{4,32}"
+                           required placeholder="위와 동일하게 입력"
+                           title="위와 동일하게 입력"/>
+                </div>
+                <div class="row" id="profileRow">
+                    <span class="label">프로필사진</span>
+                    <input type="file" id="profile"/>
+                    <!--
+                        <span class="label">프로필사진</span>
+                        <div id="profileBox" class="fas fa-user-circle no_image">
+                            <img src="profile/jw.jpg" width="140" height="140" id="profileImg"/>
+                            <label class="fas fa-camera">
+                                <input type="file" name="profile" id="profile"/>
+                            </label>
+                            <button type="button" class="delete fas fa-times"><span class="screen_out">삭제</span></button>
+                        </div>
+                         -->
+                </div>
+                <div class="box_btn">
+                    <button class="btn" type="submit"><i class="fab fa-pinterest"></i> 회원가입</button>
+                    <button class="btn" type="reset"><i class="fas fa-undo-alt"></i> 초기화</button>
+                    <a class="btn" href=""><i class="fas fa-clipboard-list"></i> index으로</a>
+                </div>
+            </fieldset>
+        </form>
+    </div><!--// joinBox -->
+
+
+</div><!--//#content -->
+<div id="footer">
+    <div class="aux">
+        <div id="policy">
+            <h4 class="screen_out">정책 및 약관</h4>
+            <ul>
+                <li><a href="">회사소개</a></li><!--
+	 --><li><a href="">광고</a></li><!--
+	 --><li><a href="">검색등록</a></li><!--
+	 --><li><a href="">제휴제안</a></li><!--
+	 --><li><a href="">이용약관</a></li><!--
+	 --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+	 --><li><a href="">청소년보호정책</a></li><!--
+	 --><li><a href="">고객센터</a></li>
+            </ul>
+        </div><!-- //policy  -->
+        <address>&copy; 2018 <a href="">jbm.com</a></address>
+    </div><!--//.aux -->
+</div><!-- //footer  -->
+<script src="/js/jquery.js"></script>
+<script>
+
+</script>
+</body>
+</html>

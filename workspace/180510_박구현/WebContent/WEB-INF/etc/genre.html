@@ -1,0 +1,270 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>장르 리스트</title>
+
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <style>
+        #genreInputBox{
+            width: 998px;
+            margin: auto;
+            border-bottom:1px dotted #5542bb;
+        }
+        #content h2 {
+            font-size: 50px;
+            font-weight: 700;
+            color: #5542BB;
+            margin: 20px;
+            text-align: center;
+        }
+        #genreBox{
+            width: 542px;
+            height: 80px;
+            font-size: 20px;
+            position: relative;
+            margin: auto;
+            /*background-color: red;*/
+            overflow: hidden;
+        }
+        #genreBox>input{
+            width: 500px;
+            height: 30px;
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 20px;
+            padding: 10px 20px;
+            border: none;
+            border: 1px solid #e0e0e0;
+            border-radius: 100px;
+            position: absolute;
+            left: 0;
+            top: 15px;
+            color: #8373dd;
+            transition:.2s ease-out;
+        }
+        #genreBox>button{
+            height: 30px;
+            width: 30px;
+            background-color:#ffffff;
+            outline: 0;
+            border: 0;
+            font-size: 20px;
+            position: absolute;
+            right: 20px;
+            top: 25px;
+            color:#e0e0e0;
+        }
+        #genreBox>button:hover{
+            color: #8373dd ;
+            cursor: pointer;
+        }
+        #genreBox>input:focus+button{
+            color: #8373dd;
+        }
+        #genreBox>input:focus{
+            border: 1px solid #8373dd;
+            outline: none;
+        }
+        #content{
+            width: 1000px;
+            margin: auto;
+            padding-bottom:20px;
+        }
+        #content #genreList{
+            overflow: hidden;
+        }
+        #content .genre{
+            width: 235px;
+            height: 80px;
+            background-color: #EEEEEE;
+            font-size: 18px;
+            border: 1px solid #E0E0E0;
+            float: left;
+            margin-left: 10px;
+            margin-bottom: 10px;
+            /*margin-bottom: 10px;*/
+            position: relative;
+            text-align:center;
+            line-height:80px;
+        }
+        #content .genre:hover{
+            background-color: #EDE8F9;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+
+        #content .no{
+            padding: 1px 3px;
+            font-size: 20px;
+            font-weight: 600;
+            vertical-align: middle;
+            background-color: #5542bb;
+            color: #ffffff;
+        }
+        #content .genre_title{
+            font-weight: 500;
+            font-size: 30px;
+            color: #424242;
+            /*background-color: yellow;*/
+        }
+        #content .genre_title>.title{
+            vertical-align: middle;
+        }
+        #content .mania_nickname{
+            width:100px;
+            height: 20px;
+            display:block;
+            /*background: red;*/
+            color: rgba(85, 66, 187,.8);
+            position: absolute;
+            top:5px;
+            left:5px;
+            font-size:18px;
+            text-align: left;
+            line-height: 20px;
+        }
+
+        #content .delete{
+            width: 30px;
+            height: 30px;
+            font-size: 18px;
+            text-align: center;
+            line-height: 28px;
+            background-color: #BDBDBD;
+            position: absolute;
+            top: 8px;
+            border-radius: 15px;
+            transition:.1s ease-out;
+            right:8px;
+            opacity:.1;
+            cursor: pointer;
+        }
+        #content .genre:hover .delete {
+            opacity:1;
+        }
+        #content .delete:hover{
+            background-color: #5542bb ;
+
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+        #content .delete button{
+            color: #ffffff;
+            background:transparent;
+            border:none;
+            cursor: pointer;
+        }
+
+    </style>
+<body>
+<div id="header">
+    <div class="aux">
+        <h1 class="logo">
+            <a href="">
+                <img src="img/logo.png"/>
+            </a>
+        </h1><!--.logo -->
+        <ul id="navList">
+            <li class="nav"><a href=""> 영화</a></li>
+            <li class="nav
+            on"><a href=""> 장르</a></li>
+        </ul><!--#naviList -->
+        <div id="loginBox">
+            <h2 class="screen_out">유저정보</h2>
+            <img src="profile/default.png" width="60" height="60" alt="테스터" title="테스터"/>
+            <form >
+                <button class="btn"><i class="fas fa-sign-out-alt"></i> 로그아웃</button>
+            </form>
+        </div><!--// loginBox  -->
+    </div><!--//.aux -->
+</div><!--//#header -->
+<div id="content">
+    <div id="genreInputBox">
+        <h2>장르입력</h2>
+        <form id="genreForm" >
+            <div id="genreBox">
+                <input id="name" name="name" placeholder="장르를 입력하세요" autocomplete="off"/>
+                <button id="registerBtn" title="입력"><i class="fas fa-keyboard"></i></button>
+            </div><!--#genreBox -->
+        </form><!--//#genreForm -->
+    </div><!--//#genreInputBox -->
+    <h2>장르 목록</h2>
+    <ul id="genreList">
+
+        <li class="genre">
+            <h3 class="genre_title">
+                <i class="no">5</i>
+                <span class="title">코미디</span>
+            </h3><!--//.genre_title -->
+            <span class="mania_nickname">테스터</span>
+
+            <div class="delete">
+                <button title="삭제"><i class="fa fa-trash"></i></button>
+            </div>
+
+        </li><!--//.genre -->
+
+        <li class="genre">
+            <h3 class="genre_title">
+                <i class="no">4</i>
+                <span class="title">멜로</span>
+            </h3><!--//.genre_title -->
+            <span class="mania_nickname">테스터</span>
+
+            <div class="delete">
+                <button title="삭제"><i class="fa fa-trash"></i></button>
+            </div>
+
+        </li><!--//.genre -->
+
+        <li class="genre">
+            <h3 class="genre_title">
+                <i class="no">2</i>
+                <span class="title">에로</span>
+            </h3><!--//.genre_title -->
+            <span class="mania_nickname">테스터</span>
+
+            <div class="delete">
+                <button title="삭제"><i class="fa fa-trash"></i></button>
+            </div>
+
+        </li><!--//.genre -->
+
+
+    </ul><!--#genreList -->
+
+
+</div><!--//#content -->
+<div id="footer">
+    <div class="aux">
+        <div id="policy">
+            <h4 class="screen_out">정책 및 약관</h4>
+            <ul>
+                <li><a href="">회사소개</a></li><!--
+	 --><li><a href="">광고</a></li><!--
+	 --><li><a href="">검색등록</a></li><!--
+	 --><li><a href="">제휴제안</a></li><!--
+	 --><li><a href="">이용약관</a></li><!--
+	 --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+	 --><li><a href="">청소년보호정책</a></li><!--
+	 --><li><a href="">고객센터</a></li>
+            </ul>
+        </div><!-- //policy  -->
+        <address>&copy; 2018 <a href="">jbm.com</a></address>
+    </div><!--//.aux -->
+</div><!-- //footer  -->
+<script src="js/jquery.js"></script>
+
+
+<script>
+
+
+</script>
+</body>
+</html>

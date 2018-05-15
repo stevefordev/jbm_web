@@ -1,0 +1,245 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>영화 리스트</title>
+
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/default.css" />
+    <link href="https://fonts.googleapis.com/css?family=Do+Hyeon" rel="stylesheet">
+    <link rel="shortcut icon" href="img/favicon.png" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <style>
+
+        #content{
+            width: 1000px;
+            margin: auto;
+            position:relative;
+            padding-bottom:30px;
+        }
+        #content #movieList{
+            margin-top: 30px;
+            overflow: hidden;
+        }
+        #listBox{
+            width: 1000px;
+            margin-bottom: 50px;
+        }
+        #listBox h2 {
+            font-size: 50px;
+            font-weight: 700;
+            color: #5542BB;
+            margin: 20px;
+            text-align: center;
+        }
+
+        .audience_num strong {
+            font-size:18px;
+        }
+        .release_date{
+            position: absolute;
+            right:10px;
+            bottom: 10px;
+            color: #BDBDBD;
+            font-size: 15px;
+        }
+
+
+        #content .movie:hover .btn {
+            opacity:1;
+        }
+
+
+        #content .btn:hover{
+            cursor: pointer;
+            background-color: #5542bb ;
+            box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+        }
+        #content a{
+            text-decoration: none;
+            color: #ffffff;
+        }
+
+
+        #content #insert {
+            position:absolute;
+            bottom:10px;
+            right:0;
+        }
+
+        #content #insert:hover {
+            background:#5542BB;
+            color:#fff;
+        }
+
+        /**/
+        #listBox li{
+            width: 236px;
+            height: 440px;
+            float: left;
+            margin-left: 10px;
+            margin-bottom: 130px;
+            border: 1px solid #999999;
+        }
+        #listBox li>a{
+            width: 236px;
+            height: 440px;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+
+        #listBox li>a>.summary{
+            opacity: 0;
+            width: 216px;
+            height: 320px;
+            background-color: #fff;
+            position: absolute;
+            left: 0;
+            top:0;
+            z-index: 1;
+            transition: .3s ease;
+            font-size: 16px;
+            line-height:20px;
+            color:#424242;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            word-wrap:break-word;
+            padding:10px;
+            text-align: justify;
+
+        }
+
+        #listBox li>a:hover>.summary {
+        opacity: 1;
+
+        }
+
+        #listBox li>a:hover::after{
+            opacity: 1;
+
+        }
+        #listBox li>a:hover{
+            box-shadow: 0 12px 15px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 rgba(0, 0, 0, 0.19);
+        }
+        #listBox .info_box{
+            position: absolute;
+            background-color: #ffffff;
+            color: #eee;
+            width: 234px;
+            height: 100px;
+            bottom:0;
+        }
+
+
+
+        #listBox li>a:hover .info_box{
+            bottom: 0;
+        }
+        #listBox h3{
+            text-align: center;
+            font-size: 20px;
+            color: #424242;
+            margin-top: 20px;
+        }
+        /**/
+
+
+
+
+
+    </style>
+<body>
+
+
+
+
+<div id="header">
+    <div class="aux">
+        <h1 class="logo">
+            <a href="">
+                <img src="img/logo.png"/>
+            </a>
+        </h1><!--.logo -->
+        <ul id="navList">
+            <li class="nav
+
+            on
+
+            "><a href=""> 영화</a></li>
+            <li class="nav
+
+            "><a href=""> 장르</a></li>
+        </ul><!--#naviList -->
+        <div id="loginBox">
+            <h2 class="screen_out">유저정보</h2>
+            <img src="profile/default.png" width="60" height="60" alt="테스터" title="테스터"/>
+            <form>
+                <button class="btn"><i class="fas fa-sign-out-alt"></i> 로그아웃</button>
+            </form>
+        </div><!--// loginBox  -->
+    </div><!--//.aux -->
+</div><!--//#header -->
+<div id="content">
+
+    <section id="listBox">
+        <h2>영화목록</h2>
+        <ul id="movieList">
+
+            <li>
+                <a class="movie" href="">
+                    <img src="poster/poster1.jpg" alt="월E"/>
+                    <div class="summary">텅 빈 지구에 홀로 남아 수백 년이란 시간을 외롭게 일만 하며 보내던 월-E (WALL-E: Waste Allocation Load Lifter Earth-Class, 지구 폐기물 수거-처리용 로봇). 그런 그가 매력적인 탐사 로봇 ‘이브’와 마주친 순간, 잡동사니 수집만이 낙이던 인생에도 소중한 목표가 생긴다. 이브는 지구의 미래를 결정할 열쇠가 우연히 월-E의 손에 들어간 사실을 알게 되고, 고향별로 돌아갈 날만 애타게 기다리는 인간들에게 이를 보고하기 위해 서둘러 우주로 향한다. 한편 월-E는 이브를 뒤쫓아 은하를 가로지르며, 스크린 사상 가장 짜릿한 상상이 넘치는 어드벤처를 선사</div>
+                    <div class="info_box">
+
+                        <h3> <i class="movie_rating rating_all "></i><!--//.movie_rating -->
+                            월E</h3>
+                        <div class="release_date">
+                            2014.01.01
+                            <span>개봉</span></div>
+
+                    </div>
+
+
+                </a>
+
+            </li>
+
+        </ul><!--#movieList -->
+    </section>
+    <div class='paginate'><span title="이전 페이지 없음"><i class="fas fa-caret-left"></i></span><strong title='현재 1페이지'>1</strong><span title='다음 페이지 없음'><i class='fas fa-caret-right'></i></span></div>
+    <a id="insert" class="btn" href="/movie/register"><i class="fa fa-floppy-o"></i><i class="fas fa-save"></i> 영화등록</a>
+
+
+
+</div><!--//#content -->
+<div id="footer">
+    <div class="aux">
+        <div id="policy">
+            <h4 class="screen_out">정책 및 약관</h4>
+            <ul>
+                <li><a href="">회사소개</a></li><!--
+	 --><li><a href="">광고</a></li><!--
+	 --><li><a href="">검색등록</a></li><!--
+	 --><li><a href="">제휴제안</a></li><!--
+	 --><li><a href="">이용약관</a></li><!--
+	 --><li><a href=""><strong>개인정보이용약관</strong></a></li><!--
+	 --><li><a href="">청소년보호정책</a></li><!--
+	 --><li><a href="">고객센터</a></li>
+            </ul>
+        </div><!-- //policy  -->
+        <address>&copy; 2018 <a href="">jbm.com</a></address>
+    </div><!--//.aux -->
+</div><!-- //footer  -->
+<script src="/js/jquery.js"></script>
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

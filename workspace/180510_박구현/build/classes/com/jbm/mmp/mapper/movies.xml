@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="movies">
+
+	<select id="selectList" parameterType="map" resultType="Movie">	
+		SELECT no, title, engTitle, releaseDate, state, director, actors, summary, rating, poster, maniaNo, regdate
+			FROM(SELECT no, title, engTitle, releaseDate, state, director, 
+					actors, summary, rating, poster, maniaNo, regdate, rownum r
+				FROM(SELECT no, title, eng_title engTitle, release_date releaseDate, state, director, actors, summary, rating, poster, mania_no maniaNo, regdate
+					FROM movies				
+					ORDER BY 1 DESC))
+			WHERE r BETWEEN #{start} AND #{end}
+	</select>
+
+	<select id="selectTotal" resultType="int">
+		SELECT count(no)
+		FROM movies
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Movie">
+		SELECT mo.no, mo.title, mo.eng_title engTitle, mo.release_date releaseDate, mo.state, mo.director, mo.actors, mo.summary, mo.rating, mo.poster, 
+		mo.mania_no maniaNo, mo.regdate, ma.nickname maniaNickname, ma.profile maniaProfile
+		FROM movies mo, manias ma
+		WHERE mo.mania_no = ma.no
+		AND mo.no = #{no}
+	</select>
+	
+	<insert id="insert" parameterType="Movie">
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT movies_seq.nextval FROM dual
+		</selectKey>
+			INSERT INTO movies (no, title, eng_title, release_date, state, director, actors, summary, rating, poster, mania_no, regdate)
+			VALUES (#{no}, #{title}, #{engTitle}, #{releaseDate}, #{state}, #{director}, #{actors}, #{summary}, #{rating}, #{poster}, #{maniaNo}, systimestamp)
+	</insert>
+	
+	<update id="update" parameterType="Movie">
+		UPDATE movies SET title = #{title}, eng_title = #{engTitle}, release_date = #{releaseDate}, state = #{state}, 
+			director = #{director}, actors = #{actors}, summary = #{summary}, rating = #{rating}, poster = #{poster}, mania_no = #{maniaNo}
+		WHERE no = #{no}
+	</update>
+	
+	<delete id="delete" parameterType="int">
+		DELETE movies
+		WHERE no=#{no}
+	</delete>
+</mapper>

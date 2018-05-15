@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="manias">
+
+	<insert id="insert" parameterType="Mania">
+		<selectKey resultType="int" keyProperty="no" order="BEFORE">
+			SELECT manias_seq.nextval FROM dual
+		</selectKey>		
+			INSERT INTO manias(no, id, password, nickname, profile, regdate)
+			VALUES(#{no}, #{id}, #{password}, #{nickname}, #{profile}, systimestamp)
+	</insert>
+
+	<select id="selectLogin" parameterType="Mania" resultType="Mania">
+		SELECT no, id, password, nickname, profile, regdate
+		FROM manias
+		WHERE id = #{id} AND password = #{password}
+	</select>
+	
+	<select id="selectOne" parameterType="int" resultType="Mania">
+		SELECT no, id, password, nickname, profile, regdate
+		FROM manias
+		WHERE no = #{no}
+	</select>
+	
+	<select id="selectById" parameterType="String" resultType="Mania">
+		SELECT no, id, password, nickname, profile, regdate
+		FROM manias
+		WHERE id = #{id}
+	</select>
+	
+	<select id="selectList" parameterType="map" resultType="Mania">
+		SELECT no, id, password, nickname, profile, regdate
+		FROM(SELECT no, id, password, nickname, profile, regdate, rownum r
+			FROM(SELECT no, id, password, nickname, profile, regdate
+				FROM manias				
+				ORDER BY 1 DESC))
+		WHERE r BETWEEN #{start} AND #{end}
+	</select>
+	
+</mapper>
