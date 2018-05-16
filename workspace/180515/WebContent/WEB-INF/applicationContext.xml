@@ -13,12 +13,16 @@
 <!-- 트랜잭션을 annotation 으로  -->
 <tx:annotation-driven/>
 
+<!-- Annotation 기반 자동  -->
+<aop:aspectj-autoproxy/>
+
+<!--  우리가 만든 Aspect 빈등록 -->
+<bean class="com.jbm.mmp.aop.LogAspect" />
 <!-- WAS의 DataSource을 얻어옴(JNDI) -->
 <jee:jndi-lookup id="dataSource"
  jndi-name="java:comp/env/jdbc/oracle"/>
- 
- 
- <bean id="transactionManager" p:dataSource-ref="dataSource" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" />
+
+<bean id="transactionManager" p:dataSource-ref="dataSource" class="org.springframework.jdbc.datasource.DataSourceTransactionManager" />
  
 <!-- SqlSessionFactory 설정 -->
 <bean id="sqlSessionFactory"
