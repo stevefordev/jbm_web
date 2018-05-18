@@ -11,10 +11,6 @@ public interface MoviesDAO {
   public int selectTotal();
 
   public int insert(Movie movie);
-  
-  public int update(Movie movie);
 
   public Movie selectOne(int no);
-  
-  public int delete(int no);
 }

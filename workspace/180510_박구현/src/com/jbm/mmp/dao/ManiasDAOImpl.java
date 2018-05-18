@@ -18,20 +18,8 @@ public class ManiasDAOImpl implements ManiasDAO {
   }
   
   @Override
-  public Mania selectLogin(Mania mania) {
+  public Mania selectOne(Mania mania) {
     // TODO Auto-generated method stub
-    return session.selectOne("manias.selectLogin", mania);
-  }
-  
-  @Override
-  public Mania selectOne(int no) {
-    // TODO Auto-generated method stub
-    return session.selectOne("manias.selectOne", no);
-  }
-  
-  @Override
-  public Mania selectById(String id) {
-    // TODO Auto-generated method stub
-    return session.selectOne("manias.selectById", id);
+    return session.selectOne("manias.selectOne", mania);
   }
 }

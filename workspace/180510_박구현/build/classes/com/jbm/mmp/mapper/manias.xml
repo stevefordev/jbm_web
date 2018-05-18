@@ -12,23 +12,12 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			VALUES(#{no}, #{id}, #{password}, #{nickname}, #{profile}, systimestamp)
 	</insert>
 
-	<select id="selectLogin" parameterType="Mania" resultType="Mania">
+	<select id="selectOne" parameterType="Mania" resultType="Mania">
 		SELECT no, id, password, nickname, profile, regdate
 		FROM manias
 		WHERE id = #{id} AND password = #{password}
 	</select>
 	
-	<select id="selectOne" parameterType="int" resultType="Mania">
-		SELECT no, id, password, nickname, profile, regdate
-		FROM manias
-		WHERE no = #{no}
-	</select>
-	
-	<select id="selectById" parameterType="String" resultType="Mania">
-		SELECT no, id, password, nickname, profile, regdate
-		FROM manias
-		WHERE id = #{id}
-	</select>
 	
 	<select id="selectList" parameterType="map" resultType="Mania">
 		SELECT no, id, password, nickname, profile, regdate

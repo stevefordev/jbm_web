@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<setting name="jdbcTypeForNull" value="NULL" />
+	</settings>
+	<!-- typeAliases -->
+	<typeAliases>
+		<typeAlias type="com.jbm.mmp.vo.Mania" alias="Mania" />
+		<typeAlias type="com.jbm.mmp.vo.Genre" alias="Genre" />
+		<typeAlias type="com.jbm.mmp.vo.Movie" alias="Movie" />
+		<typeAlias type="com.jbm.mmp.vo.MovieGenre"
+			alias="MovieGenre" />
+	</typeAliases>
+
+	<!-- mapper파일들의 경로 설정 -->
+	<mappers>
+		<mapper resource="com/jbm/mmp/mapper/manias.xml" />
+		<mapper resource="com/jbm/mmp/mapper/genres.xml" />
+		<mapper resource="com/jbm/mmp/mapper/movies.xml" />
+		<mapper resource="com/jbm/mmp/mapper/movie-genres.xml" />
+	</mappers>
+
+</configuration>
+
+
+

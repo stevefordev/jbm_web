@@ -34,15 +34,4 @@ PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
 			INSERT INTO movies (no, title, eng_title, release_date, state, director, actors, summary, rating, poster, mania_no, regdate)
 			VALUES (#{no}, #{title}, #{engTitle}, #{releaseDate}, #{state}, #{director}, #{actors}, #{summary}, #{rating}, #{poster}, #{maniaNo}, systimestamp)
 	</insert>
-	
-	<update id="update" parameterType="Movie">
-		UPDATE movies SET title = #{title}, eng_title = #{engTitle}, release_date = #{releaseDate}, state = #{state}, 
-			director = #{director}, actors = #{actors}, summary = #{summary}, rating = #{rating}, poster = #{poster}, mania_no = #{maniaNo}
-		WHERE no = #{no}
-	</update>
-	
-	<delete id="delete" parameterType="int">
-		DELETE movies
-		WHERE no=#{no}
-	</delete>
 </mapper>

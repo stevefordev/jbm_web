@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -90,7 +89,7 @@ public class MovieController {
       // upload 경로 (원본 저장)
       String uploadPath = path + File.separator + "upload" + File.separator;
 
-      // poster 경로
+      // poster 경로 (프로필 160 * 160)
       String profilePath = path + File.separator + "poster" + File.separator;
 
       // UUID 를 이용하여 이름을 랜덤하게
@@ -141,8 +140,8 @@ public class MovieController {
    * @return
    */
   @RequestMapping(value = "/movie/{no}/update", method = RequestMethod.GET)
-  public String updateForm(@PathVariable int no, Model model, @RequestHeader String referer) {
-    model.addAllAttributes(moviesService.getMovieForUpdate(no));    
+  public String updateForm(@PathVariable int no, Model model) {
+    model.addAllAttributes(moviesService.getMovieForUpdate(no));
     return "movieUpdateForm";
   }
 
@@ -158,7 +157,7 @@ public class MovieController {
   public String update(@ModelAttribute Movie movie, @RequestParam(value = "genre") int[] genres,
       Model model) {
 
-    moviesService.modify(movie, genres);
+    moviesService.register(movie, genres);
 
     return "redirect:/movie/" + movie.getNo();
   }
@@ -169,64 +168,25 @@ public class MovieController {
    * @return
    */
   @RequestMapping(value = "/movie", method = RequestMethod.DELETE)
-  public String delete(int no) {
-
-    moviesService.remove(no);
+  public String delete() {
     return "redirect:/movie/page/1";
   }
 
-  /**
-   * 수정 페이지에서 포스터 비동기 업로드
-   * 
-   * @param request
-   * @return
-   */
+
   @RequestMapping(value = "/ajax/poster", method = RequestMethod.POST)
   @ResponseBody
   public String poster(MultipartHttpServletRequest request) {
     Iterator<String> itr = request.getFileNames();
-    String fileName = "";
     if (itr.hasNext()) {
       MultipartFile mpf = request.getFile(itr.next());
       System.out.println(mpf.getOriginalFilename() + " uploaded!");
       try {
         System.out.println("file length : " + mpf.getBytes().length);
         System.out.println("file name : " + mpf.getOriginalFilename());
-
-        fileName = mpf.getOriginalFilename();
-        System.out.println(fileName);
-        // 톰캣의 img 폴더 경로
-        ServletContext context = request.getServletContext();
-        String path = context.getRealPath("");
-
-        // upload 경로 (원본 저장)
-        String uploadPath = path + File.separator + "upload" + File.separator;
-
-        // poster 경로
-        String profilePath = path + File.separator + "poster" + File.separator;
-
-        // UUID 를 이용하여 이름을 랜덤하게
-        UUID uuid = UUID.randomUUID();
-
-        int dotIdx = fileName.lastIndexOf(".");
-
-        fileName = fileName.substring(dotIdx, fileName.length());
-        fileName = uuid + fileName;
-
-        File file = new File(uploadPath + fileName);
-
-        try {
-          mpf.transferTo(file);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-
-        ResizeImageUtil.resize(uploadPath + fileName, profilePath + fileName, 236, 340);
-
       } catch (Exception e) {
         e.printStackTrace();
       }
     }
-    return "{ \"data\" : \"" + fileName + "\"}";
+    return "{ \"data\" : \"55\"}";
   }
 }

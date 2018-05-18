@@ -7,12 +7,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.jbm.mmp.service.ManiasService;
 import com.jbm.mmp.util.ResizeImageUtil;
@@ -130,12 +127,4 @@ public class ManiaController {
     return "redirect:/index";
   }
 
-  @RequestMapping(value = "/ajax/mania/{id}", method = RequestMethod.GET)
-  @ResponseBody
-  public String checkUser(@PathVariable String id) {
-
-    boolean result = false;
-    result = maniasService.getUserById(id) != null;
-    return "{ \"data\" : " + result + "}";
-  }
 }
