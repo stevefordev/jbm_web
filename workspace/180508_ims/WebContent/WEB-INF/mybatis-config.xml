@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration 
+PUBLIC "-//mybatis.org/DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- typeAliases -->
+	<typeAliases>
+		<typeAlias type="org.jbm.ims.vo.Group"
+		alias="Group"/>
+		<typeAlias type="org.jbm.ims.vo.Idol"
+		alias="Idol"/>
+		
+		<typeAlias alias="Admin"
+		 type="org.jbm.ims.vo.Admin"/>
+	</typeAliases>
+	
+	<!-- mapper파일들의 경로 설정 -->
+	<mappers>
+		<mapper resource="org/jbm/ims/mapper/groups.xml"/>
+		<mapper resource="org/jbm/ims/mapper/idols.xml"/>
+		<mapper resource="org/jbm/ims/mapper/admins.xml"/>
+	</mappers>
+	
+</configuration>
+
+
+
