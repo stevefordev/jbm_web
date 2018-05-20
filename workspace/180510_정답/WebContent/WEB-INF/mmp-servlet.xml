@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd">
+
+<!-- 무조건 씁니다. -->
+<mvc:annotation-driven/>
+
+<!-- resource -->
+<mvc:resources location="/css/" mapping="/css/**"/>
+<mvc:resources location="/img/" mapping="/img/**"/>
+<mvc:resources location="/upload/" mapping="/upload/**"/>
+<mvc:resources location="/profile/" mapping="/profile/**"/>
+<mvc:resources location="/poster/" mapping="/poster/**"/>
+<mvc:resources location="/js/" mapping="/js/**"/>
+
+<!-- /WEB-INF/view/와 .jsp가 반복 -->
+<mvc:view-resolvers>
+	<mvc:jsp 
+	prefix="/WEB-INF/view/"
+	 suffix=".jsp"/>	
+</mvc:view-resolvers>
+
+<mvc:view-controller path="/test"/>
+
+<mvc:interceptors>
+	<mvc:interceptor>
+		<mvc:mapping path="/movie/**"/>
+		<mvc:mapping path="/movie"/>
+		<mvc:mapping path="/genre"/>
+		<mvc:mapping path="/genre/**"/>
+		<bean class="com.jbm.mmp.interceptor.LoginCheckInterceptor"/>
+	</mvc:interceptor>
+</mvc:interceptors>
+
+<!-- Controller를 등록 -->
+<bean p:genresService-ref="genresService"
+ class="com.jbm.mmp.controller.GenreController"/>
+
+<bean p:maniasService-ref="maniasService"
+class="com.jbm.mmp.controller.ManiaController"/>
+
+<bean p:moviesService-ref="moviesService"
+ p:genresService-ref="genresService"
+class="com.jbm.mmp.controller.MovieController"/>
+
+<bean class="com.jbm.mmp.controller.ImageUploadController"/>
+ 
+ <!-- MultipartResovler -->
+<bean id="multipartResolver"
+p:defaultEncoding="UTF-8"
+p:maxUploadSize="104857600"
+class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
+</beans>
+
+

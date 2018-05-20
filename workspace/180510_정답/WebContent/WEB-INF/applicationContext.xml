@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.3.xsd">
+
+<!-- WAS의 DataSource을 얻어옴(JNDI) -->
+<jee:jndi-lookup id="dataSource"
+ jndi-name="java:comp/env/jdbc/oracle"/>
+
+<!-- SqlSessionFactory 설정 -->
+<bean id="sqlSessionFactory"
+p:dataSource-ref="dataSource"
+p:configLocation="WEB-INF/mybatis-config.xml"
+class="org.mybatis.spring.SqlSessionFactoryBean"/>
+
+<!-- SqlSession 설정 -->
+<bean id="sqlSession"
+ class="org.mybatis.spring.SqlSessionTemplate">
+	<constructor-arg ref="sqlSessionFactory"/>
+</bean>
+
+<!-- DAO설정 -->
+ <bean id="genresDAO"
+ p:session-ref="sqlSession"
+  class="com.jbm.mmp.dao.GenresDAOImpl"/>
+ <bean id="maniasDAO"
+ p:session-ref="sqlSession"
+  class="com.jbm.mmp.dao.ManiasDAOImpl"/>
+ <bean id="movieGenresDAO"
+ p:session-ref="sqlSession"
+  class="com.jbm.mmp.dao.MovieGenresDAOImpl"/>
+ <bean id="moviesDAO"
+ p:session-ref="sqlSession"
+ class="com.jbm.mmp.dao.MoviesDAOImpl"/>
+ 
+<!-- Service설정 -->
+<bean id="genresService"
+p:genresDAO-ref="genresDAO"
+ class="com.jbm.mmp.service.GenresServiceImpl"/>
+<bean id="maniasService"
+p:maniasDAO-ref="maniasDAO"
+ class="com.jbm.mmp.service.ManiasServiceImpl"/>
+<bean id="moviesService"
+p:movieGenresDAO-ref="movieGenresDAO"
+p:moviesDAO-ref="moviesDAO"
+p:genresDAO-ref="genresDAO"
+class="com.jbm.mmp.service.MoviesServiceImpl"/>
+
+</beans>
