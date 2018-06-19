@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation="http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket-4.3.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- <aop:aspectj-autoproxy/> -->
+
+	<!-- 무조건 씁니다. -->
+	<mvc:annotation-driven />
+
+	<!-- resource -->
+	<mvc:resources location="/css/" mapping="/css/**" />
+	<mvc:resources location="/img/" mapping="/img/**" />
+	<mvc:resources location="/upload/" mapping="/upload/**" />
+	<mvc:resources location="/profile/" mapping="/profile/**" />
+	<mvc:resources location="/poster/" mapping="/poster/**" />
+	<mvc:resources location="/js/" mapping="/js/**" />
+
+	<!-- /WEB-INF/view/와 .jsp가 반복 -->
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/view/" suffix=".jsp" />
+	</mvc:view-resolvers>
+
+	<!-- WebSocket의 핸들러로 등록 -->
+	<websocket:handlers>
+		<websocket:mapping handler="webSocketHandler"
+			path="/chat" />
+	</websocket:handlers>
+	
+	<bean id="webSocketHandler" p:controller-ref="WSController"
+		class="handler.WebSocketHandler"></bean>
+	
+	<bean id="vector" class="java.util.Vector"></bean>
+	
+	<!-- Controller를 등록 -->
+	<bean class="controller.IndexController" />
+	<bean id="WSController"
+	p:sessions-ref="vector"
+	 class="controller.WSController"></bean>
+</beans>
+
+
