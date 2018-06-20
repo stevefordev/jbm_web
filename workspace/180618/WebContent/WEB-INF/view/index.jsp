@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<html>
 <head>
 <meta charset="UTF-8">
-<title>KH 웹소켓을 이용한 채팅 구현</title>
+<title>웹소켓을 이용한 채팅 구현</title>
 <link rel="stylesheet" href="css/reset.css" />
 <link href="https://fonts.googleapis.com/css?family=Do+Hyeon|Yeon+Sung&amp;subset=korean" rel="stylesheet">
 <style>
@@ -283,13 +284,14 @@ img {
 	left: 0;
 	top: 0;
 	text-align: center;
-	transition: 1s ease;
+	transition: .3s ease-in;
 	z-index: 1;
 }
+
 #loginBox.off {
-	left:-1200px;
-	bottom:120px
+	top:800px;
 }
+
 #loginBox h2 {
 	font-size:30px;
 	color: #fff;
@@ -337,6 +339,7 @@ img {
 	display: block;
 }
 
+
 #closeBtn {
 	position:absolute;
 	right:10px;
@@ -348,7 +351,7 @@ img {
 <body>
 <div id="wrap">
 	<div id="header">
-		<h1>KH 웹소켓을 이용한 채팅</h1>
+		<h1>웹소켓을 이용한 채팅</h1>
 	</div><!-- //header -->
 	<div id="content">
 		<div id="chattingContentBox">
@@ -386,22 +389,76 @@ img {
 	<div id="footer">&copy;2018 jbm.com</div>
 	<div id="loader"></div>
 </div>
-<%-- 메세지 템플릿 --%>
-<script type="text/template" id="msgTmp">
-<li>
+
+<%-- 임시 메세지 템플릿 --%>
+<script type="text/template" id="tmp">
+	<li>
 	<div class="card_user">
 		<img src="img/1.png" alt="테스트"/>
 		<strong>테스트</strong>
 	</div><!-- //card_user -->
 	<div class="box_reply">
-		<div class="comments"><@-msg@></div>
-		<span class="ip">192.168.0.157</span>
+			<div class="comments"><@-msg@></div>
+		<span class="ip">192.168.0.157</span>			
 	</div><!--//box_reply-->
+	</li>
+</script>
+
+<%-- 유저가 들어오는 템플릿 --%>
+<script type="text/template" id="joinTmp">
+<li class="msg">
+	<img src="<@=user.profile@>" alt="<@=user.nickname@>" />
+	<span><strong><@=user.nickname@></strong>님이 들어왔습니다.</span>
+	<span><@-user.ip@></span>
 </li>
 </script>
+
+<%-- 유저가 나가는 템플릿 --%>
+<script type="text/template" id="leaveTmp">
+<li class="msg">
+	<img src="<@-user.img@>" alt="<@-user.nickname@>" />
+	<span><strong><@-user.nickname@></strong>님이 나갔습니다.</span>
+</li>
+</script>
+
+<%-- 메세지 템플릿 --%>
+<script type="text/template" id="msgTmp">
+<li
+<@ if(user.id==id) {@>
+	class='mine'			
+<@ } @>
+>
+	<div class="card_user">
+		<img src="<@-user.profile@>" alt="<@-user.nickname@>"/>
+		<strong><@-user.nickname@></strong>
+	</div><!-- //card_user -->
+	<div class="box_reply">
+		<div class="comments"><@-user.msg@></div>
+<@ if(user.id!=id) {@>
+	<span class="ip"><@-user.ip@></span>		
+<@ } @>
+		</div><!--//box_reply-->
+</li>
+</script>
+
+<%-- 유저 리스트 템플릿 --%>		
+<script type="text/template" id="userListTmp">
+<@ _.each(users,function(user){ @>
+<li class="user
+<@ if(user.id==id) {@>
+	mine			
+<@ } @>
+">
+	<img src="<@=user.img@>"/>
+	 <h3><@=user.nickname@></h3>
+</li>
+<@})@>
+</script>
+
 <script src="js/jquery.js"></script>
 <script src="js/underscore-min.js"></script>
 <script>
+	
 	_.templateSettings = {
 		interpolate: /\<\@\=(.+?)\@\>/gim,
 		evaluate: /\<\@(.+?)\@\>/gim,
@@ -411,96 +468,263 @@ img {
 	//메세지 템플릿
 	var msgTmp = _.template($("#msgTmp").html());
 	
+	//join 템플릿
+	var joinTmp = _.template($("#joinTmp").html());
+	
+
+	//채팅시작 버튼
 	var $loginBtn = $("#loginBtn");
-	var $loginBox = $("#loginBox");
-	var $loader = $("#loader");
-	var $msg = $("#msg");
-	var $closeBtn = $("#closeBtn");
+	//프로필 입력 창
+    var $loginBox = $("#loginBox");
+	//로딩이미지
+    var $loader = $("#loader");
+	//메세지 입력 input
+    var $msg = $("#msg");
+	//메세지 입력 버튼
 	var $sendBtn = $("#sendBtn");
+	//서버와 연결 끊는 버튼
+	var $closeBtn = $("#closeBtn");
+	//채팅리스트 ul
 	var $chatList = $("#chatList ul");
 	
-	//ws 객체
-	var ws = null;
 	
-	//ws 가 가진 메서드
-	// 1) close() : 서버와 닫은
-	// 2) send(msg) : 서버로 메세지 보내기
+    //ws객체
+    var ws = null;
+    
+    //ws가 가진 메서드
+    // 1) close() : 서버와 닫음
+    // 2) send(msg) : 서버로 메세지 보내기
+    
+    
+	//보내기 버튼을 클릭했을때    
+    $sendBtn.click(sendMsg);
+    
+    $msg.keyup(function(e) {
+    	
+    	if(e.keyCode==13) {
+    		sendMsg();
+    	}//end
+    	
+    });//keyup();
+    
+    function sendMsg() {
+    	
+    	//유저가 입력한 msg를 얻어옴
+    	var msg = $msg.val().trim();
+    	
+    	if(msg.length>0) {
+			var protocol = new Protocol();
+			protocol.code = 4;
+			protocol.profile = profile;
+			protocol.nickname = nickname;
+			protocol.id = id;
+			protocol.ip = ip;
+			protocol.msg = msg;
+			
+			var json = JSON.stringify(protocol);
+			
+			ws.send(json);
+    	}//if end
+
+    	//유저가 입력한 msg 지움
+    	$msg.val("").focus();
+    	
+    }//sendMsg() end
+    
+    
+    $closeBtn.click(function() {
+    	//서버와 연결 끊음
+    	ws.close();
+    });//click() end
+    
+    
+  	//프로필 사진이름
+	var profile = "";
+	//닉네임 이름
+	var nickname = "";
+	//ip
+	var ip = "";
+	//id
+	var id = "";
 	
-	$sendBtn.click(function () {
-		sendMsg();
-	})
+	//프로필 사진들
+	var $profileImg = $("#loginBox img");
 	
-	$msg.keyup(function(e) {
-		if(e.keyCode == 13) {
-			sendMsg();
-		    e.preventDefault();
-		}		
-	});
-	
-	function sendMsg() {
-		var msg = $msg.val().trim();
+	$profileImg.click(function() {
 		
-		//서버로 보냄
-		if (msg.length > 0) {
-			ws.send(msg);	
-		}		
-		$msg.val("").focus();
+		var $this = $(this);
+		
+		if($this.hasClass("on")) {
+			$profileImg.attr("class","");
+			profile = "";
+		}else {
+			profile = $this.attr("class","on").attr("src");
+			//console.log(profile);
+			
+			$profileImg.not(this).attr("class","off");
+		}//if~else end
+	});//click() end
+	
+	//닉네임 입력 input
+	var $nickname = $("#nickname");
+	
+	$nickname.keyup(function(e) {
+		if(e.keyCode==13) {
+			handshakingWebSocket();
+		}
+	});//keyup end
+
+    $loginBtn.click(function() {
+    	
+    	//호출
+    	handshakingWebSocket();
+    	
+    });//click() end
+    
+    //서버와 웹소켓 연결하는 함수
+    //(handshaking)
+    function handshakingWebSocket() {
+		
+		if(profile=="") {
+			alert("프로필이미지를 선택해주세요~");
+			return;
+		}//if end
+		
+		nickname = $nickname.val().trim();
+		
+		if(nickname.length==0) {
+			alert("닉네임을 입력해주세요~");
+			$nickname.val("").focus();
+			return;
+		}//if end
+    	
+    	//서버와 연결될때까지 로딩이미지
+    	$loader.addClass("show");
+    	
+    	ws = new WebSocket("ws://192.168.0.10/chat");
+    	
+    	//ws은 4가지 이벤트
+    	//(open, close, error, message)
+    	$(ws).on("open",function(){
+    			
+	    		//로그인 박스 열림
+	        	$loginBox.addClass("off");
+        	
+    			console.log("열렸음!");
+    			//열렸으니까 채팅 가능하게
+    			$loader.removeClass("show");
+
+    			//자동으로 포커스 지정
+    			$msg.focus();
+    			
+    		 })
+    	     .on("close",function(){
+    	    	 
+    	    	 console.log("닫혔음!");
+    	    	 
+    	    	 //ws 초기화
+    	    	 ws = null;
+    	    	 profile = "";
+    	    	 nickname = "";    	    	 
+    	    	 $profileImg.attr("class", "");    	    	 
+    	    	 
+    	    	 //로그인박스 다시 보여주기
+    	    	 $loginBox.removeClass("off");    	    	 
+    	    	 
+    	    	//로딩이미지 숨기기
+    	    	 $loader.removeClass("show");
+    	    	
+    	    	 $nickname.val("").focus();
+    	     })
+    	     .on("error",function(){
+    	    	 alert("에러발생!");
+    	     })
+    	     .on("message",function(e){
+    	    	 
+	   	    	 //e는 jquery의 이벤트객체
+	   	    	 
+	   	    	 //e.originalEvent는 자바스크팁트 
+	   	    	 //이벤트 객체
+    	    	var evt = e.originalEvent;
+    	    	 
+	   	    	 //이게 실제 데이터(문자열 json)
+	   	    	 var data = evt.data;
+	   	    	 
+	   	    	 //실제 json객체
+	   	    	 var protocol = JSON.parse(data);
+	   	    	 
+	   	    	 console.log(protocol);
+	   	    	 
+	   	    	 //console.log(protocol.code);
+	   	    	 
+	   	    	 switch (protocol.code) {
+	   	    	 case 1 :  
+	   	    		 //코드 2, 이미지, 닉네임, 넣고 보내기	   	    		 
+	   	    		 sendProfile(protocol);
+	   	    		 break;
+	   	    	 case 2 : 
+	   	    		 // 유저가 들어옴
+	   	    		 join(protocol);
+	   	    		 break;
+	   	    	 case 3 : 
+	   	    		 break;
+	   	    	 case 4 :
+	   	    		displayMsg(protocol);
+	   	    		 break;
+	   	    	 default :
+	   	    	 
+	   	    	 }//switch end
+    	    	 
+    	     });
+    	
+    }//handshakingWebSocket()
+     
+    //새ㅗㄹ운 유저의 정보를 서버로 보내는 함수
+    function sendProfile(protocol) {
+    	ip = protocol.ip;
+		id = protocol.id;
+		protocol.code = 2;
+		protocol.profile = profile;
+		protocol.nickname = nickname;
+		
+		var json = JSON.stringify(protocol);
+		ws.send(json);
 	}
-	
-	$loginBtn.click(function(){
-		$loginBox.addClass("off");		
-		handshakingWebSocket();
-	});
-	
-	$closeBtn.click(function () {
-		//서버와 연결 끊음
-		ws.close();
-	});
-	//서버와 웹소켓 연결하는 함수
-	//(handshaking)
-	function handshakingWebSocket() {
-		
-		//서버와 연결될때까지 로딩 이미지
-		$loader.addClass("show");
-		
-		ws = new WebSocket("ws://192.168.0.12/chat");
-		
-		//ws은 4가지 이벤트
-		//(open, close, error, message)
-		$ws = $(ws);
-		$ws.on("open", function () {
-			console.log("열렸음!");
-			//로딩 이미지 숨기기
-			$loader.removeClass("show");
-			
-			//자동으로 포커스 지정
-			$msg.focus();
-			
-			
-		}).on("close", function () {
-			console.log("닫혔음!");
-			//초기화
-			ws = null;
-			//로그인 박스 다시 보여주기
-			$loginBox.removeClass("off");
-			//로딩 이미지 숨기기
-			$loader.removeClass("show");
-			
-		}).on("error", function () {
-			console.log("에러발생!");
-			
-		}).on("message", function (msg) {
-			//console.log("메세지 왔음!",msg);
-			//msg는 jquery 의 이벤트 객체
-			//msg.originalEvent 는 자바스크립트 이벤트 객체
-			var evt = msg.originalEvent;
-			console.log(evt.data);
-			
-			$chatList.append(msgTmp({msg:evt.data}));
-			
-			$("#chatList").animate({scrollTop:$chatList.height()});
-		});
+    
+    //유저가 들어왔기 때문에 
+    //joinTmp 와 userListTmp 을 이용하여
+    //님이 들어왔습니다. 와 유저리스트 갱신
+    function join(protocol) {
+    	$chatList.append(joinTmp({user:protocol}));
+    	scrollBody();
 	}
+    
+    //넘어온 프로토콜을 출력
+    function displayMsg(protocol) {
+		    	 
+	   	 $chatList.append(msgTmp({user:protocol}));
+	   	 scrollBody();
+    	
+    }//displayMsg() end
+    
+    function scrollBody() {
+    	var height = $chatList.height();
+	   	 
+	   	 $("#chatList").animate({scrollTop:height},100);
+	}
+    
+    //어설픈 생성자 함수형
+    function Protocol() {
+    	
+    }
+    /* 순수 자바스크립트
+    var loginBtn = document.getElementById("loginBtn");
+    
+    loginBtn.addEventListener("click",function() {
+    	alert("test");
+    },true);
+	*/
+
 </script>
 </body>
 </html>

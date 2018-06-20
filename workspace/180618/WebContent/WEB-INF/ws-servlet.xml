@@ -31,17 +31,18 @@
 		<websocket:mapping handler="webSocketHandler"
 			path="/chat" />
 	</websocket:handlers>
-	
+
 	<bean id="webSocketHandler" p:controller-ref="WSController"
 		class="handler.WebSocketHandler"></bean>
-	
+
 	<bean id="vector" class="java.util.Vector"></bean>
-	
+	<bean id="objectMapper"
+		class="com.fasterxml.jackson.databind.ObjectMapper"></bean>
+
 	<!-- Controller를 등록 -->
 	<bean class="controller.IndexController" />
-	<bean id="WSController"
-	p:sessions-ref="vector"
-	 class="controller.WSController"></bean>
+	<bean id="WSController" p:sessions-ref="vector"
+		p:mapper-ref="objectMapper" class="controller.WSController"></bean>
 </beans>
 
 
