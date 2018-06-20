@@ -34,8 +34,11 @@
 p:controller-ref="WSController"
  class="handler.WebSocketHandler"/>
  
+<bean id="objectMapper"
+class="com.fasterxml.jackson.databind.ObjectMapper"/>
 
 <bean id="WSController"
+p:mapper-ref="objectMapper"
  class="controller.WSController">
  <!-- list객체를 의존성 주입 -->
  <property name="sessions">
